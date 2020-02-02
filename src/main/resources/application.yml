@@ -1,0 +1,19 @@
+server:
+  port: 8080
+
+spring:
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+
+altair:
+  enabled: true
+  pageTitle: Altair
+  mapping: /altair
+  endpoint:
+    graphql: /graphql
+  cdn:
+    enabled: true
+    version: 2.3
+
