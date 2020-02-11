@@ -1,19 +1,36 @@
+
+#debug: true
+
 server:
   port: 8080
 
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
+
 spring:
+  datasource:
+    url: "jdbc:postgresql://${DATABASE_HOST:localhost}:5432/testDB"
+    name: "testDB"
+    username: "userDB"
+    password: "userDB"
   jpa:
-    show-sql: true
+    generate-ddl: true
+    properties:
+      hibernate:
+        format_sql: true
+        enable_lazy_load_no_trans: true
     hibernate:
       ddl-auto: create-drop
+      use-new-id-generator-mappings: true
 
-altair:
-  enabled: true
-  pageTitle: Altair
-  mapping: /altair
-  endpoint:
-    graphql: /graphql
-  cdn:
-    enabled: true
-    version: 2.3
+graphql:
+  tools:
+    schema-location-pattern: "**/*.graphql"
 

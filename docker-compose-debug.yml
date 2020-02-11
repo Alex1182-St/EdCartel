@@ -1,0 +1,31 @@
+version: "3.7"
+
+services:
+
+  app:
+    container_name: edcartel
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: on-failure
+    working_dir: /EdCartel
+    volumes:
+      - .:/EdCartel
+    ports:
+      - 8080:8080
+    environment:
+      DATABASE_HOST: db
+    command: java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8088 -Djava.security.egd=file:/dev/./urandom -jar build/libs/EdCartel.jar
+    links:
+      - db
+
+  db:
+    container_name: database
+    image: postgres:12.1-alpine
+    restart: on-failure
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: testDB
+      POSTGRES_USER: userDB
+      POSTGRES_PASSWORD: userDB

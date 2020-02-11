@@ -1,64 +1,64 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-plugins {
-    id("org.springframework.boot") version "2.2.4.RELEASE"
-    id("io.spring.dependency-management") version "1.0.9.RELEASE"
-
-    kotlin("jvm") version "1.3.61"
-
-    kotlin("plugin.spring") version "1.3.61"
-    kotlin("plugin.jpa") version "1.3.61"
-}
-
 group = "edcartel"
-version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_11
-
-val developmentOnly by configurations.creating
-configurations {
-    runtimeClasspath {
-        extendsFrom(developmentOnly)
-    }
-    compileOnly {
-        extendsFrom(configurations.annotationProcessor.get())
-    }
-}
 
 repositories {
     jcenter()
     mavenCentral()
+
+    maven(url = "https://repo.spring.io/snapshot")
+    maven(url = "https://repo.spring.io/milestone")
+}
+
+plugins {
+    val kotlinVersion = "1.3.61"
+    val springBootVersion = "2.2.4.RELEASE"
+    val dependencyManagementVersion = "1.0.9.RELEASE"
+
+    id("org.springframework.boot") version springBootVersion
+    id("io.spring.dependency-management") version dependencyManagementVersion
+
+    kotlin(module = "jvm") version kotlinVersion
+    kotlin(module = "plugin.spring") version kotlinVersion
+    kotlin(module = "plugin.allopen") version kotlinVersion
+    kotlin(module = "plugin.noarg") version kotlinVersion
+    kotlin(module = "plugin.jpa") version kotlinVersion
+}
+
+allOpen {
+    annotation(fqName = "javax.persistence.Entity")
+    annotation(fqName = "javax.persistence.Embeddable")
+    annotation(fqName = "javax.persistence.MappedSuperclass")
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation(kotlin(module = "noarg"))
+    implementation(kotlin(module = "allopen"))
+    implementation(kotlin(module = "reflect"))
+    implementation(kotlin(module = "stdlib"))
 
-    developmentOnly("org.springframework.boot:spring-boot-devtools")
+    implementation(group = "com.fasterxml.jackson.module", name = "jackson-module-kotlin")
+    implementation(group = "com.fasterxml.jackson.datatype", name = "jackson-datatype-hibernate5")
 
-    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+    implementation(group = "com.graphql-java-kickstart", name = "graphql-java-tools", version = "5.7.1")
 
-    implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation(group = "com.graphql-java-kickstart", name = "graphql-spring-boot-starter", version = "6.0.1")
+    testImplementation(group = "com.graphql-java-kickstart", name = "graphql-spring-boot-starter-test", version = "6.0.1")
 
-    implementation("com.graphql-java-kickstart", "graphql-spring-boot-starter", "6.0.1")
-    implementation("com.graphql-java-kickstart", "altair-spring-boot-starter", "6.0.1")
+    implementation(group = "org.springframework.boot", name = "spring-boot-devtools")
+    implementation(group = "org.springframework.boot", name = "spring-boot-starter-actuator")
+    implementation(group = "org.springframework.boot", name = "spring-boot-starter-security")
+    implementation(group = "org.springframework.boot", name = "spring-boot-starter-web")
+    implementation(group = "org.springframework.boot", name = "spring-boot-starter-data-jpa")
 
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    annotationProcessor(group = "org.springframework.boot", name = "spring-boot-configuration-processor")
+    testAnnotationProcessor(group = "org.springframework.boot", name = "spring-boot-configuration-processor")
 
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    annotationProcessor(group = "org.projectlombok", name = "lombok")
+    testAnnotationProcessor(group = "org.projectlombok", name = "lombok")
 
-    runtimeOnly("com.h2database:h2")
-
-    compileOnly("org.projectlombok:lombok")
-    annotationProcessor("org.projectlombok:lombok")
-
-    testImplementation("org.springframework.boot:spring-boot-starter-test") {
-        exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
-    }
-    testImplementation("org.springframework.security:spring-security-test")
-}
-
-tasks.withType<Test> {
-    useJUnitPlatform()
+    runtimeOnly(group = "org.postgresql", name = "postgresql")
 }
 
 tasks.withType<KotlinCompile> {

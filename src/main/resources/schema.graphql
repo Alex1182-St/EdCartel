@@ -1,0 +1,42 @@
+input CreateUserCred {
+    userName: String!
+    passWord: String!
+    firstName: String!
+    familyName: String!
+    roles: [RoleE!]
+}
+
+type Mutation {
+    saveUser(input: CreateUserCred!): User
+}
+
+schema {
+    query: Query
+    mutation: Mutation
+}
+
+type Query {
+    findAllUser: [User]
+    findUserByID(id: ID): User
+}
+
+type User {
+    id: ID
+    userName: String
+    passWord: String
+    firstName: String
+    familyName: String
+    roles: [Role!]
+}
+
+type Role {
+    id: ID
+    name: RoleE
+}
+
+enum RoleE {
+    USER
+    STUDENT
+    TEACHER
+    ADMIN
+}
