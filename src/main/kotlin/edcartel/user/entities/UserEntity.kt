@@ -1,10 +1,13 @@
 package edcartel.user.entities
 
+import edcartel.user.repositories.RoleRepository
+import org.springframework.security.core.GrantedAuthority
 import java.util.*
 import javax.persistence.*
 
-@Table(name = "users")
+
 @Entity
+@Table(name = "users")
 data class UserEntity(
 
     @Id
@@ -14,15 +17,15 @@ data class UserEntity(
 
 
     @Column(unique = true, nullable = false)
-    val userName: String,
+    val username: String = "",
 
     @Column(nullable = false)
-    val passWord: String,
+    val password: String = "",
 
     @ManyToMany(
         fetch = FetchType.LAZY,
         cascade = arrayOf(
-            CascadeType.ALL, CascadeType.PERSIST
+            CascadeType.PERSIST, CascadeType.MERGE
         )
     )
     @JoinTable(
@@ -34,26 +37,26 @@ data class UserEntity(
             JoinColumn(name = "role_id", referencedColumnName = "id")
         )
     )
-    val roles: MutableSet<RoleEntity>,
+    val roles: MutableSet<RoleEntity> = mutableSetOf(),
 
     @Column(nullable = false)
-    val enabled: Boolean = true,
+    val isEnabled: Boolean = true,
 
     @Column(nullable = false)
-    val accountNonLocked: Boolean = true,
+    val isAccountNonLocked: Boolean = true,
 
     @Column(nullable = false)
-    val accountNonExpired: Boolean = true,
+    val isAccountNonExpired: Boolean = true,
 
     @Column(nullable = false)
-    val credentialsNonExpired: Boolean = true,
+    val isCredentialsNonExpired: Boolean = true,
 
 
     @Column(nullable = false)
-    val firstName: String,
+    val firstName: String = "",
 
     @Column(nullable = false)
-    val familyName: String,
+    val familyName: String = "",
 
     @Lob
     val aboutSelf: String? = null,
@@ -67,9 +70,10 @@ data class UserEntity(
     @Column(unique = true)
     val phone: String? = null,
 
-
+    @Column(unique = true)
     val skype: String? = null,
 
-    val github: String? = null
+    @Column(unique = true)
+    val git: String? = null
 
 )

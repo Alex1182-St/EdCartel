@@ -1,48 +1,46 @@
 package edcartel.configurations
 
-import edcartel.user.services.UserDetailsServiceImpl
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import org.springframework.security.config.http.SessionCreationPolicy
+import org.springframework.security.core.userdetails.UserDetailsService
+import org.springframework.security.crypto.password.PasswordEncoder
 
-@EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 @Configuration
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 class SecurityConfig(
 
-    val userDetailsServiceImpl: UserDetailsServiceImpl
+    private val passwordEncoder: PasswordEncoder,
+
+    private val userDetailsService: UserDetailsService
 
 ) : WebSecurityConfigurerAdapter() {
 
+    @Bean
+    override fun authenticationManagerBean() : AuthenticationManager =
+        super.authenticationManagerBean()
+
     override fun configure(http: HttpSecurity) {
+        http.cors().and().csrf().disable()
 
-        http.csrf().disable()
-
-        http.headers().frameOptions().disable()
+        http.sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
         http.authorizeRequests()
-            .anyRequest().permitAll().and()
-            .httpBasic()
+                .anyRequest().permitAll()
 
-        http.logout()
-            .logoutUrl("/sign-out")
-            .deleteCookies("JSESSIONID")
-            .clearAuthentication(true)
-            .invalidateHttpSession(true)
-
+        http.formLogin().and().logout().permitAll()
     }
 
     override fun configure(auth: AuthenticationManagerBuilder) {
-        auth.userDetailsService(userDetailsServiceImpl)
-            .passwordEncoder(passwordEncoder())
+        auth.userDetailsService(userDetailsService)
+            .passwordEncoder(passwordEncoder)
     }
-
-    @Bean()
-    fun passwordEncoder() = BCryptPasswordEncoder()
-
 }

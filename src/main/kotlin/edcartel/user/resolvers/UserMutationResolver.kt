@@ -1,18 +1,16 @@
 package edcartel.user.resolvers
 
 import com.coxautodev.graphql.tools.GraphQLMutationResolver
-import edcartel.user.entities.RoleEnum
 import edcartel.user.entities.UserEntity
 import edcartel.user.repositories.RoleRepository
 import edcartel.user.repositories.UserRepository
 import edcartel.user.requests.CreateUserCred
-import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.stereotype.Service
-import java.security.Principal
-import javax.transaction.Transactional
+import org.springframework.transaction.annotation.Transactional
+import java.util.*
 
-@Transactional
 @Service
+@Transactional
 class UserMutationResolver(
 
     val userRepo: UserRepository,
@@ -21,16 +19,19 @@ class UserMutationResolver(
 
 ) : GraphQLMutationResolver {
 
-    @PreAuthorize("hasAuthority('ADMIN')")
-    fun saveUser(newUser: CreateUserCred) =
-        userRepo.save(
+    fun userCreate(newUser: CreateUserCred) : UserEntity {
+        return userRepo.save(
             UserEntity(
-                userName = newUser.userName,
-                passWord = newUser.passWord,
+                username = newUser.userName,
+                password = newUser.passWord,
                 firstName = newUser.firstName,
                 familyName = newUser.familyName,
-                roles = newUser.roles.map { roleReo.findByName(it) }
-                    .toMutableSet()
+                roles = newUser.roles.map { roleReo.findByName(it) }.toMutableSet()
             )
         )
+    }
+
+    fun userRemove(id: UUID) : Boolean {
+        return userRepo.removeById(id)
+    }
 }

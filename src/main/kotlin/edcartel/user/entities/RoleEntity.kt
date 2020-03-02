@@ -3,8 +3,8 @@ package edcartel.user.entities
 import java.util.*
 import javax.persistence.*
 
-@Table(name = "roles")
 @Entity
+@Table(name = "roles")
 data class RoleEntity(
 
     @Id
@@ -12,8 +12,8 @@ data class RoleEntity(
     val id: UUID? = null,
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    val name: RoleEnum,
+    @Column(unique = true, nullable = false)
+    val name: RoleEnum? = null,
 
     val description: String? = null
 

@@ -1,7 +1,11 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 group = "edcartel"
-java.sourceCompatibility = JavaVersion.VERSION_11
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+//    targetCompatibility = JavaVersion.VERSION_11
+}
 
 repositories {
     jcenter()
@@ -9,6 +13,16 @@ repositories {
 
     maven(url = "https://repo.spring.io/snapshot")
     maven(url = "https://repo.spring.io/milestone")
+}
+
+val developmentOnly by configurations.creating
+configurations {
+    runtimeClasspath {
+        extendsFrom(developmentOnly)
+    }
+    compileOnly {
+        extendsFrom(configurations.annotationProcessor.get())
+    }
 }
 
 plugins {
@@ -19,46 +33,69 @@ plugins {
     id("org.springframework.boot") version springBootVersion
     id("io.spring.dependency-management") version dependencyManagementVersion
 
-    kotlin(module = "jvm") version kotlinVersion
-    kotlin(module = "plugin.spring") version kotlinVersion
-    kotlin(module = "plugin.allopen") version kotlinVersion
-    kotlin(module = "plugin.noarg") version kotlinVersion
-    kotlin(module = "plugin.jpa") version kotlinVersion
+    kotlin("jvm") version kotlinVersion
+    kotlin("plugin.spring") version kotlinVersion
+    kotlin("plugin.allopen") version kotlinVersion
+    kotlin("plugin.noarg") version kotlinVersion
+    kotlin("plugin.jpa") version kotlinVersion
+}
+
+extra["springBootAdminVersion"] = "2.2.1"
+extra["springCloudVersion"] = "Hoxton.SR1"
+
+dependencies {
+    implementation(kotlin("noarg"))
+    implementation(kotlin("allopen"))
+    implementation(kotlin("reflect"))
+    implementation(kotlin("stdlib"))
+
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+
+    // GraphQL
+    implementation("com.graphql-java-kickstart:graphql-spring-boot-starter:6.0.1")
+    testImplementation("com.graphql-java-kickstart:graphql-spring-boot-starter-test:6.0.1")
+
+    // For dev
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
+
+    // Config
+    implementation("org.springframework.cloud:spring-cloud-starter-config")
+    implementation("org.springframework.boot:spring-boot-configuration-processor")
+
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation("org.springframework.boot:spring-boot-starter-batch")
+    implementation("org.springframework.boot:spring-boot-starter-cache")
+
+    // Security
+    implementation("org.springframework.cloud:spring-cloud-starter-security")
+    implementation("org.springframework.cloud:spring-cloud-starter-oauth2")
+
+    // Database
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
+    runtimeOnly("org.postgresql:postgresql")
+
+    // Admin
+    implementation("de.codecentric:spring-boot-admin-starter-client")
+    implementation("de.codecentric:spring-boot-admin-starter-server")
+
+    implementation("io.micrometer:micrometer-registry-prometheus")
+
+    // Lombok
+    implementation("org.projectlombok:lombok")
+}
+
+dependencyManagement {
+    imports {
+        mavenBom("de.codecentric:spring-boot-admin-dependencies:${property("springBootAdminVersion")}")
+        mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
+    }
 }
 
 allOpen {
-    annotation(fqName = "javax.persistence.Entity")
-    annotation(fqName = "javax.persistence.Embeddable")
-    annotation(fqName = "javax.persistence.MappedSuperclass")
-}
-
-dependencies {
-    implementation(kotlin(module = "noarg"))
-    implementation(kotlin(module = "allopen"))
-    implementation(kotlin(module = "reflect"))
-    implementation(kotlin(module = "stdlib"))
-
-    implementation(group = "com.fasterxml.jackson.module", name = "jackson-module-kotlin")
-    implementation(group = "com.fasterxml.jackson.datatype", name = "jackson-datatype-hibernate5")
-
-    implementation(group = "com.graphql-java-kickstart", name = "graphql-java-tools", version = "5.7.1")
-
-    implementation(group = "com.graphql-java-kickstart", name = "graphql-spring-boot-starter", version = "6.0.1")
-    testImplementation(group = "com.graphql-java-kickstart", name = "graphql-spring-boot-starter-test", version = "6.0.1")
-
-    implementation(group = "org.springframework.boot", name = "spring-boot-devtools")
-    implementation(group = "org.springframework.boot", name = "spring-boot-starter-actuator")
-    implementation(group = "org.springframework.boot", name = "spring-boot-starter-security")
-    implementation(group = "org.springframework.boot", name = "spring-boot-starter-web")
-    implementation(group = "org.springframework.boot", name = "spring-boot-starter-data-jpa")
-
-    annotationProcessor(group = "org.springframework.boot", name = "spring-boot-configuration-processor")
-    testAnnotationProcessor(group = "org.springframework.boot", name = "spring-boot-configuration-processor")
-
-    annotationProcessor(group = "org.projectlombok", name = "lombok")
-    testAnnotationProcessor(group = "org.projectlombok", name = "lombok")
-
-    runtimeOnly(group = "org.postgresql", name = "postgresql")
+    annotation("javax.persistence.Entity")
+    annotation("javax.persistence.Embeddable")
+    annotation("javax.persistence.MappedSuperclass")
 }
 
 tasks.withType<KotlinCompile> {

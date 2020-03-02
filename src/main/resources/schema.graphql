@@ -1,32 +1,40 @@
+
 input CreateUserCred {
-    userName: String!
-    passWord: String!
+    username: String!
+    password: String!
     firstName: String!
     familyName: String!
     roles: [RoleE!]
 }
 
 type Mutation {
-    saveUser(input: CreateUserCred!): User
+    userCreate(input: CreateUserCred!): User
+    userRemove(id: ID!): Boolean
 }
 
 schema {
-    query: Query
     mutation: Mutation
+    query: Query
 }
 
 type Query {
-    findAllUser: [User]
-    findUserByID(id: ID): User
+    users: [User]
+    userById(id: ID!): User
 }
 
 type User {
-    id: ID
-    userName: String
-    passWord: String
-    firstName: String
-    familyName: String
+    id: ID!
+    username: String!
+    password: String!
+    firstName: String!
+    familyName: String!
     roles: [Role!]
+    aboutSelf: String
+    gender: Boolean
+    email: String
+    phone: String
+    skype: String
+    git: String
 }
 
 type Role {

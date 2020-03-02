@@ -7,12 +7,15 @@ import edcartel.user.repositories.RoleRepository
 import edcartel.user.repositories.UserRepository
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso
 import org.springframework.boot.runApplication
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
-import javax.transaction.Transactional
+import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.transaction.annotation.Transactional
 
 @SpringBootApplication
 class EdCartelApplication(
+    
+    private val passwordEncoder: PasswordEncoder,
 
     private val userRepo: UserRepository,
 
@@ -22,7 +25,6 @@ class EdCartelApplication(
 
     @Transactional
     override fun run(vararg args: String?) {
-
         roleRepo.saveAll(
             listOf(
                 RoleEntity(name = RoleEnum.USER),
@@ -33,12 +35,12 @@ class EdCartelApplication(
         userRepo.saveAll(
             listOf(
                 UserEntity(
-                    userName = "alex", passWord = BCryptPasswordEncoder().encode("alex"),
+                    username = "alex", password = passwordEncoder.encode("alex"),
                     firstName = "alex", familyName = "alex",
                     roles = mutableSetOf(roleRepo.findByName(RoleEnum.ADMIN))
                 ),
                 UserEntity(
-                    userName = "daniel", passWord = BCryptPasswordEncoder().encode("daniel"),
+                    username = "daniel", password = passwordEncoder.encode("daniel"),
                     firstName = "daniel", familyName = "daniel",
                     roles = mutableSetOf(roleRepo.findByName(RoleEnum.USER))
                 )

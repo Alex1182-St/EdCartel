@@ -1,13 +1,15 @@
 package edcartel.user.repositories
 
 import edcartel.user.entities.UserEntity
-import org.springframework.data.repository.CrudRepository
+import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 import java.util.*
 
 @Repository
-interface UserRepository : CrudRepository<UserEntity, UUID> {
+interface UserRepository : JpaRepository<UserEntity, UUID> {
 
-    fun findByUserName(userName: String): Optional<UserEntity>
+    fun findByUsername(username: String): Optional<UserEntity>
+
+    fun removeById(id: UUID): Boolean
 
 }
