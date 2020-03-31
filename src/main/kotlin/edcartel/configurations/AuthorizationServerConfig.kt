@@ -15,33 +15,33 @@ import org.springframework.security.oauth2.provider.token.TokenStore
 @EnableAuthorizationServer
 class AuthorizationServerConfig(
 
-    private val passwordEncoder: PasswordEncoder,
+    private val passwordEncoder : PasswordEncoder,
 
-    private val tokenStore: TokenStore,
+    private val tokenStore : TokenStore,
 
-    private val accessTokenConverter: AccessTokenConverter,
+    private val accessTokenConverter : AccessTokenConverter,
 
-    private val authenticationManager: AuthenticationManager
+    private val authenticationManager : AuthenticationManager
 
 ) : AuthorizationServerConfigurerAdapter() {
 
-    override fun configure(security: AuthorizationServerSecurityConfigurer) {
+    override fun configure(security : AuthorizationServerSecurityConfigurer) {
         security.allowFormAuthenticationForClients().passwordEncoder(passwordEncoder)
             .tokenKeyAccess("permitAll()")
             .checkTokenAccess("isAuthenticated()")
     }
 
-    override fun configure(clients: ClientDetailsServiceConfigurer) {
+    override fun configure(clients : ClientDetailsServiceConfigurer) {
         clients
             .inMemory()
-                .withClient("tut").secret(passwordEncoder.encode("tut"))
-                .authorizedGrantTypes("password", "refresh_token")
-                .scopes("all")
-                .accessTokenValiditySeconds(150 * 60)
-                .refreshTokenValiditySeconds(350 * 60)
+                .withClient("vue-client").secret(passwordEncoder.encode("vue-password"))
+                .authorizedGrantTypes("client_credentials", "password", "refresh_token")
+                .scopes("any")
+                .accessTokenValiditySeconds(250 * 60)
+                .refreshTokenValiditySeconds(500 * 60)
     }
 
-    override fun configure(endpoints: AuthorizationServerEndpointsConfigurer) {
+    override fun configure(endpoints : AuthorizationServerEndpointsConfigurer) {
         endpoints.tokenStore(tokenStore)
             .accessTokenConverter(accessTokenConverter)
             .authenticationManager(authenticationManager)

@@ -1,9 +1,9 @@
-version: "3.7"
+version: "3.3"
 
 services:
 
-  app:
-    container_name: edcartel
+  back_end:
+    container_name: edcartel__back_end
     build:
       context: .
       dockerfile: Dockerfile
@@ -12,7 +12,7 @@ services:
     volumes:
       - .:/EdCartel
     ports:
-      - 8080:8080
+      - 9696:9696
     environment:
       DATABASE_HOST: db
     command: java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8088 -Djava.security.egd=file:/dev/./urandom -jar build/libs/EdCartel.jar
@@ -21,7 +21,7 @@ services:
 
   db:
     container_name: database
-    image: postgres:12.1-alpine
+    image: postgres:12.2-alpine
     restart: on-failure
     ports:
       - 5432:5432

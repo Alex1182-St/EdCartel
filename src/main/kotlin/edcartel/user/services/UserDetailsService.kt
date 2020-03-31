@@ -14,13 +14,13 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional
 class UserDetailsService(
 
-    val userRepo: UserRepository
+    val userRepo : UserRepository
 
 ) : UserDetailsService {
 
-    override fun loadUserByUsername(username: String) : UserDetails {
-        val user = userRepo.findByUsername(username)
-            .orElseThrow { UsernameNotFoundException("User not found with username: $username") }
+    override fun loadUserByUsername(username : String) : UserDetails {
+        val user = userRepo.getByUsername(username)
+            ?: throw UsernameNotFoundException("User not found with username: $username")
 
         return User(
             user.username,
@@ -33,8 +33,7 @@ class UserDetailsService(
         )
     }
 
-    fun getAuthorities(user: UserEntity) : List<GrantedAuthority> {
-        return user.roles.map { it.name as GrantedAuthority }
-    }
+    fun getAuthorities(user : UserEntity) : List<GrantedAuthority> =
+        user.roles.map { it.name as GrantedAuthority }
 
 }

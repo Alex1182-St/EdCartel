@@ -6,6 +6,6 @@ enum class RoleEnum : GrantedAuthority {
 
     USER, STUDENT, TEACHER, ADMIN;
 
-    override fun getAuthority(): String = name
+    override fun getAuthority() : String = "ROLE_${name}"
 
 }

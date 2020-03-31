@@ -1,12 +1,18 @@
 
 #####
-POST tut:tut@localhost:8080/oauth/token
+POST vue-client:vue-password@localhost:8080/oauth/token
 Content-Type: application/x-www-form-urlencoded
 
-grant_type=password&username=alex&password=alex&scope=all
+grant_type=client_credentials
 
 #####
-POST tut:tut@localhost:8080/oauth/check_token?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1ODMwODIyMDYsInVzZXJfbmFtZSI6ImFsZXgiLCJhdXRob3JpdGllcyI6WyJBRE1JTiJdLCJqdGkiOiI5YjM5NDczNy0xNDI0LTQxMGUtODk0NC1lMTkyYTU1N2NjYmUiLCJjbGllbnRfaWQiOiJ0dXQiLCJzY29wZSI6WyJhbGwiXX0.mv78edhe7DVPFS5Oc6sDQv5J6Z4ISh2SBYGxNBUzz5I
+POST vue-client:vue-password@localhost:9696/oauth/token
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password&username=alex&password=alex
+
+#####
+POST vue-client:vue-password@localhost:8888/oauth/check_token?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1ODU2MDg0MzYsInVzZXJfbmFtZSI6ImFsZXgiLCJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sImp0aSI6IjlkZjhkODc4LTgzYzYtNDY5Yi04NGUwLWVlYTAwYmNmYzc2MyIsImNsaWVudF9pZCI6InZ1ZS1jbGllbnQiLCJzY29wZSI6WyJhbnkiXX0.xOYVEseTPyPJZmhpXG5TUZH36hs2rVLzKO_Fd8NW1po
 Content-Type: application/x-www-form-urlencoded
 
 #####
@@ -14,19 +20,11 @@ GET tut:tut@localhost:8080/oauth/token_key
 Content-Type: application/x-www-form-urlencoded
 
 
-
 #####
-POST localhost:8080/oauth/authorize?client_id=tut&response_type=code&scope=all
+POST vue-client:vue-password@localhost:8888/login
 Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1ODQzNTI3MDAsInVzZXJfbmFtZSI6ImFsZXgiLCJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sImp0aSI6ImRmMTZlNjRlLTNiZmUtNDBiNC05YzRmLTMwOGFhZjM3MTdlNyIsImNsaWVudF9pZCI6InZ1ZS1jbGllbnQiLCJzY29wZSI6WyJhbnkiXX0.8xPGSdi-LpB0zL5WyVHvrl_5ZLbX8EqqMjGIAfkHEJU
 
-username=alex&password=alex
-
-###
-
-POST tut:tut@localhost:8080/oauth/token
-Content-Type: application/x-www-form-urlencoded
-
-grant_type=client_credentials&scope=all
 
 ###
 

@@ -11,16 +11,16 @@ import org.springframework.security.oauth2.provider.token.TokenStore
 @EnableResourceServer
 class ResourceServerConfig(
 
-    private val tokenStore: TokenStore
+    private val tokenStore : TokenStore
 
 ) : ResourceServerConfigurerAdapter() {
 
-    override fun configure(http: HttpSecurity) {
+    override fun configure(http : HttpSecurity) {
         http.authorizeRequests()
-                .anyRequest().permitAll()
+            .anyRequest().access("#oauth2.hasScope('any')")
     }
 
-    override fun configure(resources: ResourceServerSecurityConfigurer) {
+    override fun configure(resources : ResourceServerSecurityConfigurer) {
         resources.tokenStore(tokenStore)
     }
 }

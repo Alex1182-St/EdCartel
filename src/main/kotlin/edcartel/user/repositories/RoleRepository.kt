@@ -9,6 +9,6 @@ import java.util.*
 @Repository
 interface RoleRepository : JpaRepository<RoleEntity, UUID> {
 
-    fun findByName(name: RoleEnum): RoleEntity
+    fun findByName(name : RoleEnum) : RoleEntity
 
 }

@@ -1,9 +1,9 @@
-FROM gradle:6.1-jdk11
+FROM gradle:6.2.2-jdk11
 
 WORKDIR /EdCartel
 
 ADD . .
 
-RUN gradle  --no-daemon clean build bootJar
+RUN gradle clean bootJar --no-daemon
 
-EXPOSE 8080
+EXPOSE 9696

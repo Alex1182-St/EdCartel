@@ -9,12 +9,12 @@ data class RoleEntity(
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    val id: UUID? = null,
+    val id : UUID? = null,
 
     @Enumerated(EnumType.STRING)
     @Column(unique = true, nullable = false)
-    val name: RoleEnum? = null,
+    val name : RoleEnum? = null,
 
-    val description: String? = null
+    val description : String? = null
 
 )

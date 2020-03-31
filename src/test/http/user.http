@@ -1,34 +1,37 @@
-
-GET localhost:8080/user/find-all
-Content-Type: application/json
-Authorization: Basic ZGFuaWVsOmRhbmllbA==
+GET localhost:8888/user/37f559b5-e4f1-44ee-9f61-a9b8db92464a
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1ODU2NTM4OTAsInVzZXJfbmFtZSI6ImFsZXgiLCJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sImp0aSI6IjYxYWRhOTdiLTRhNzktNGNmNy04MmUwLTMwM2JmNGM2NDA2MyIsImNsaWVudF9pZCI6InZ1ZS1jbGllbnQiLCJzY29wZSI6WyJhbnkiXX0.NUel-qXfQAaWTN4HzAk0nlorzgb6UXgoNE4WwkaPAfo
 
 
 ####
+GET localhost:8888/user/info
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1ODU2MDg5ODMsInVzZXJfbmFtZSI6ImFsZXgiLCJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sImp0aSI6ImRiMzQ4MjEyLTg2M2ItNDE1OC04ODljLWJmMjA5Y2ViN2UwMSIsImNsaWVudF9pZCI6InZ1ZS1jbGllbnQiLCJzY29wZSI6WyJhbnkiXX0.G9UUBq4BdfikFNg857-Qt0t45g9g8FKM-j6wavznN2I
 
-POST localhost:8080/user/create
+
+####
+POST localhost:9696/user
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1ODU2NjUxMDUsInVzZXJfbmFtZSI6ImFsZXgiLCJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sImp0aSI6ImY2Y2Q4YjliLWVhZmYtNDZkNi1hZmEwLWEwMGEzZmM3NDVmYiIsImNsaWVudF9pZCI6InZ1ZS1jbGllbnQiLCJzY29wZSI6WyJhbnkiXX0.jkkYhRSLWUmDux9bgsKiMm_FkQtumSmWfKWvUvWwHYk
 
 {
-  "userName": "qweqweqwe",
-  "passWord": "qweqweqwe",
+  "username": "qweqweqwe",
+  "password": "qweqweqwe",
   "firstName": "qweqwe",
   "familyName": "qweqwe",
   "roles": "USER"
 }
 
 ####
-
-POST localhost:8080/user/create
+POST localhost:9696/user
 Content-Type: application/json
-Authorization: Basic YWxleDphbGV4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1ODU2NjUxMDUsInVzZXJfbmFtZSI6ImFsZXgiLCJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sImp0aSI6ImY2Y2Q4YjliLWVhZmYtNDZkNi1hZmEwLWEwMGEzZmM3NDVmYiIsImNsaWVudF9pZCI6InZ1ZS1jbGllbnQiLCJzY29wZSI6WyJhbnkiXX0.jkkYhRSLWUmDux9bgsKiMm_FkQtumSmWfKWvUvWwHYk
 
 {
-  "userName": "qweqweqwe",
-  "passWord": "qweqweqwe",
-  "firstName": "qweqweqwe",
-  "familyName": "qweqweqwe",
-  "roles": ["USER", "ADMIN"]
+  "username": "qweqweqwdghjghfgheqwe",
+  "password": "qweqweghjqweqwe",
+  "firstName": "qweqwghjghjeqqghjkghjkhgjkhgjkhgjkhgjkhgjkghjkhgjkhgjkhgjkghjkghjkghjkhgjkhgjkhgjkhgjkwewe",
+  "familyName": "qweqghjghjghjghghjkhgjkghjkghjkghjkghjkghjkghjkghjkghjkghjkghjkghweqqwewe"
 }
 
 ###

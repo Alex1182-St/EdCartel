@@ -1,21 +1,19 @@
 #debug: true
 
 server:
-  port: 8080
+  port: 9696
 
 logging:
   level:
     org:
       hibernate:
-        SQL: DEBUG
-        type:
-          descriptor:
-            sql:
-              BasicBinder: TRACE
+        SQL: debug
 
 spring:
   main:
+    log-startup-info: false
     lazy-initialization: true
+    allow-bean-definition-overriding: true
   datasource:
     url: "jdbc:postgresql://${DATABASE_HOST:localhost}:5432/testDB"
     name: "testDB"
@@ -23,11 +21,9 @@ spring:
     password: "userDB"
     initialization-mode: always
   jpa:
+    show-sql: false
     generate-ddl: true
     open-in-view: false
-    properties:
-      hibernate:
-        format_sql: true
     hibernate:
       ddl-auto: create-drop
       use-new-id-generator-mappings: true
@@ -37,12 +33,4 @@ management:
     web:
       exposure:
         include: "*"
-
-graphql:
-  servlet:
-    enabled: true
-    mapping: "/graphql"
-    actuator-metrics: true
-  tools:
-    schema-location-pattern: "**/*.graphql"
 
