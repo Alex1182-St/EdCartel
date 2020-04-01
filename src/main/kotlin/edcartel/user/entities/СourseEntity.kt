@@ -6,7 +6,7 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "courses")
-data class CourseEntity (
+data class CourseEntity(
 
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
