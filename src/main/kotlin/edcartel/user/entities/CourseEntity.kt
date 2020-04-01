@@ -30,4 +30,4 @@ data class CourseEntity(
 
         val courseAuthor : String? = null
 
-        )
+)
