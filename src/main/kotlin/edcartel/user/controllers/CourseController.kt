@@ -1,6 +1,6 @@
 package edcartel.user.controllers
 
-import edcartel.user.entities.СourseEntity
+import edcartel.user.entities.CourseEntity
 import edcartel.user.repositories.CourseRepository
 import org.springframework.web.bind.annotation.*
 import java.util.*
@@ -11,12 +11,12 @@ import java.util.*
 class CourseController(val courseRepo : CourseRepository) {
 
     @PostMapping
-    fun createCourse(@RequestBody newCourse : СourseEntity) : СourseEntity {
+    fun createCourse(@RequestBody newCourse : CourseEntity) : CourseEntity {
         return  courseRepo.save(newCourse)
     }
 
     @GetMapping("/byId/{id}")
-    fun findCourseById(@PathVariable id : UUID) : Optional<СourseEntity> {
+    fun findCourseById(@PathVariable id : UUID) : Optional<CourseEntity> {
         if (courseRepo.findById(id) != null) {
             return courseRepo.findById(id)
         }
@@ -25,7 +25,7 @@ class CourseController(val courseRepo : CourseRepository) {
     }
 
     @GetMapping("/byName/{courseName}")
-    fun findCourseByName(@PathVariable courseName : String) : СourseEntity {
+    fun findCourseByName(@PathVariable courseName : String) : CourseEntity {
         if (courseRepo.findByCourseName(courseName) != null) {
             return courseRepo.findByCourseName(courseName)
         } else
@@ -33,8 +33,8 @@ class CourseController(val courseRepo : CourseRepository) {
     }
 
     @PutMapping("/byId/{id}")
-    fun updateCourse(@PathVariable id : UUID, @RequestBody updatedCourse : СourseEntity) : СourseEntity {
-        val oldCourse : СourseEntity
+    fun updateCourse(@PathVariable id : UUID, @RequestBody updatedCourse : CourseEntity) : CourseEntity {
+        val oldCourse : CourseEntity
         if (courseRepo.findById(id) != null) {
             return courseRepo.save(updatedCourse)
         }
