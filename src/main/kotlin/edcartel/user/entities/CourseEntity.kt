@@ -1,5 +1,7 @@
 package edcartel.user.entities
 
+import org.hibernate.annotations.Fetch
+import org.hibernate.annotations.FetchMode
 import java.util.*
 import javax.persistence.*
 
@@ -24,10 +26,20 @@ data class CourseEntity(
 
         val longDescription : String? = null,
 
-        val cost : Long? = null,
+        val courseCost : Long? = null,
 
-        val discount : Int? = null,
+        val courseDiscount : Int? = null,
 
-        val courseAuthor : String? = null
+        @ManyToMany(
+                fetch = FetchType.LAZY,
+                cascade = [CascadeType.PERSIST, CascadeType.MERGE]
+        )
+        @JoinTable(
+                name = "courses_users",
+                joinColumns = [JoinColumn(name = "courses_id", referencedColumnName = "id")],
+                inverseJoinColumns = [JoinColumn(name = "users_id", referencedColumnName = "id")]
+        )
+        @Fetch(FetchMode.SUBSELECT)
+        val courseAuthor : Set<UserEntity> = setOf()
 
 )

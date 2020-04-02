@@ -70,6 +70,14 @@ data class UserEntity(
     val skype : String? = null,
 
     @Column(unique = true)
-    val git : String? = null
+    val git : String? = null,
+
+    @ManyToMany(
+            fetch = FetchType.LAZY,
+            cascade = [CascadeType.PERSIST, CascadeType.MERGE],
+            mappedBy = "users"
+    )
+    val courses : Set<CourseEntity> = setOf()
+
 
 )
