@@ -73,7 +73,7 @@ data class UserEntity(
     val git : String? = null,
 
     @ManyToMany(
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             cascade = [CascadeType.PERSIST, CascadeType.MERGE],
             mappedBy = "users"
     )

@@ -31,7 +31,7 @@ data class CourseEntity(
         val courseDiscount : Int? = null,
 
         @ManyToMany(
-                fetch = FetchType.LAZY,
+                fetch = FetchType.EAGER,
                 cascade = [CascadeType.PERSIST, CascadeType.MERGE]
         )
         @JoinTable(
@@ -39,7 +39,6 @@ data class CourseEntity(
                 joinColumns = [JoinColumn(name = "courses_id", referencedColumnName = "id")],
                 inverseJoinColumns = [JoinColumn(name = "users_id", referencedColumnName = "id")]
         )
-        @Fetch(FetchMode.SUBSELECT)
         val courseAuthor : Set<UserEntity> = setOf()
 
 )
