@@ -22,15 +22,13 @@ class CourseService (val courseRepo : CourseRepository)
 }
 
     fun deleteCourse(courseId : UUID, authorId : UUID) {
-        val ourArrayFromCourse = arrayOf(courseRepo.findById(courseId))
-        for (element in ourArrayFromCourse) {
-            if (element.equals(authorId)){
-                courseRepo.deleteById(courseId)
-            }
+        val ourListFromCourse = listOf<Any>(courseRepo.findById(courseId))
+            if (ourListFromCourse.contains(authorId)) {
+                        courseRepo.deleteById(courseId)
+        }
             else {
                 throw Exception ("You do not have rights to delete course")
             }
-        }
     }
 
 }
