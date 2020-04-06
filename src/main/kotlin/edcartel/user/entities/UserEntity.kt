@@ -1,13 +1,10 @@
 package edcartel.user.entities
 
+import edcartel.course.entities.CourseEntity
 import org.hibernate.annotations.Fetch
 import org.hibernate.annotations.FetchMode
 import java.util.*
 import javax.persistence.*
-import javax.validation.constraints.Max
-import javax.validation.constraints.Min
-import javax.validation.constraints.Pattern
-import javax.validation.constraints.Pattern.Flag.UNICODE_CASE
 
 
 @Entity
@@ -74,8 +71,7 @@ data class UserEntity(
 
     @ManyToMany(
             fetch = FetchType.EAGER,
-            cascade = [CascadeType.PERSIST, CascadeType.MERGE],
-            mappedBy = "users"
+            cascade = [CascadeType.PERSIST, CascadeType.MERGE]
     )
     val courses : Set<CourseEntity> = setOf()
 

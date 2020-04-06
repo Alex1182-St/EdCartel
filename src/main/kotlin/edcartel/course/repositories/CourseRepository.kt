@@ -1,6 +1,6 @@
-package edcartel.user.repositories
+package edcartel.course.repositories
 
-import edcartel.user.entities.CourseEntity
+import edcartel.course.entities.CourseEntity
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 import java.util.*

@@ -1,8 +1,8 @@
-package edcartel.user.controllers
+package edcartel.course.controllers
 
-import edcartel.user.entities.CourseEntity
-import edcartel.user.repositories.CourseRepository
-import edcartel.user.services.CourseService
+import edcartel.course.entities.CourseEntity
+import edcartel.course.repositories.CourseRepository
+import edcartel.course.services.CourseService
 import org.springframework.web.bind.annotation.*
 import java.util.*
 

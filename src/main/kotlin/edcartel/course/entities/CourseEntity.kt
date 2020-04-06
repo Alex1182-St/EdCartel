@@ -1,7 +1,6 @@
-package edcartel.user.entities
+package edcartel.course.entities
 
-import org.hibernate.annotations.Fetch
-import org.hibernate.annotations.FetchMode
+import edcartel.user.entities.UserEntity
 import java.util.*
 import javax.persistence.*
 

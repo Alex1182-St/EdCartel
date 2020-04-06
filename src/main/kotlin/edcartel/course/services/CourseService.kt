@@ -1,7 +1,7 @@
-package edcartel.user.services
+package edcartel.course.services
 
-import edcartel.user.entities.CourseEntity
-import edcartel.user.repositories.CourseRepository
+import edcartel.course.entities.CourseEntity
+import edcartel.course.repositories.CourseRepository
 import org.springframework.stereotype.Service
 import java.util.*
 
