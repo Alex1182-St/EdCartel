@@ -1,4 +1,4 @@
-version: "3.3"
+version: '3.6'
 
 services:
 
@@ -7,20 +7,21 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    command: java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8088 -Djava.security.egd=file:/dev/./urandom -jar build/libs/EdCartel.jar
     restart: on-failure
     working_dir: /EdCartel
     volumes:
       - .:/EdCartel
     ports:
       - 9696:9696
-    environment:
-      DATABASE_HOST: db
-    command: java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8088 -Djava.security.egd=file:/dev/./urandom -jar build/libs/EdCartel.jar
     links:
       - db
+    environment:
+      DATABASE_HOST: db
+      DATABASE_PORT: 5432
 
   db:
-    container_name: database
+    container_name: edcartel__back_end__database
     image: postgres:12.2-alpine
     restart: on-failure
     ports:

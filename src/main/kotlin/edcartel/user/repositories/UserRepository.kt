@@ -8,10 +8,6 @@ import java.util.*
 @Repository
 interface UserRepository : JpaRepository<UserEntity, UUID> {
 
-    fun getById(id : UUID) : UserEntity?
-
-    fun getByUsername(username : String)  : UserEntity?
-
-    fun removeById(id : UUID) : Boolean
+    fun getByUsername(username : String) : Optional<UserEntity>
 
 }

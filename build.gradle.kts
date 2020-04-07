@@ -1,5 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+group = "edcartel"
+
 val developmentOnly by configurations.creating
 configurations {
     runtimeClasspath {
@@ -33,8 +35,6 @@ plugins {
     id("org.jetbrains.kotlin.plugin.noarg") version kotlinVersion
 }
 
-extra["springCloudVersion"] = "Hoxton.SR3"
-
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-allopen")
     implementation("org.jetbrains.kotlin:kotlin-noarg")
@@ -46,6 +46,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-configuration-processor")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
 
     implementation("org.springframework.cloud:spring-cloud-starter-security")
     implementation("org.springframework.cloud:spring-cloud-starter-oauth2")
@@ -57,7 +58,7 @@ dependencies {
 
 dependencyManagement {
     imports {
-        mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
+        mavenBom("org.springframework.cloud:spring-cloud-dependencies:Hoxton.SR3")
     }
 }
 

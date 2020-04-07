@@ -1,13 +1,11 @@
 package edcartel.user.entities
 
-import org.hibernate.annotations.Fetch
-import org.hibernate.annotations.FetchMode
+import org.hibernate.validator.constraints.Length
+import java.io.Serializable
 import java.util.*
 import javax.persistence.*
 import javax.validation.constraints.Max
 import javax.validation.constraints.Min
-import javax.validation.constraints.Pattern
-import javax.validation.constraints.Pattern.Flag.UNICODE_CASE
 
 
 @Entity
@@ -19,14 +17,16 @@ data class UserEntity(
     @Column(updatable = false, nullable = false)
     val id : UUID? = null,
 
+    @field:Length(min = 2, max = 255)
     @Column(unique = true, nullable = false)
-    val username : String? = null,
+    val username : String = "",
 
+    @field:Length(min = 2, max = 255)
     @Column(nullable = false)
-    val password : String? = null,
+    val password : String = "",
 
     @ManyToMany(
-        fetch = FetchType.EAGER,
+        fetch = FetchType.LAZY,
         cascade = [CascadeType.PERSIST, CascadeType.MERGE]
     )
     @JoinTable(
@@ -34,8 +34,7 @@ data class UserEntity(
         joinColumns = [JoinColumn(name = "user_id", referencedColumnName = "id")],
         inverseJoinColumns = [JoinColumn(name = "role_id", referencedColumnName = "id")]
     )
-    @Fetch(FetchMode.SUBSELECT)
-    val roles : Set<RoleEntity> = setOf(),
+    val roles : Collection<RoleEntity> = setOf(),
 
     @Column(nullable = false)
     val isEnabled : Boolean = true,
@@ -49,27 +48,31 @@ data class UserEntity(
     @Column(nullable = false)
     val isCredentialsNonExpired : Boolean = true,
 
+    @field:Length(min = 2, max = 255)
     @Column(nullable = false)
-    val firstName : String? = null,
+    val firstName : String = "",
 
+    @field:Length(min = 2, max = 255)
     @Column(nullable = false)
-    val familyName : String? = null,
+    val familyName : String = "",
 
-    @Lob
+    @field:Lob
+    @Column(nullable = true)
     val aboutSelf : String? = null,
 
+    @Column(nullable = true)
     val gender : Boolean? = null,
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = true)
     val email : String? = null,
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = true)
     val phone : String? = null,
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = true)
     val skype : String? = null,
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = true)
     val git : String? = null
 
-)
+) : Serializable

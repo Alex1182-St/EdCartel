@@ -1,8 +1,5 @@
-POST localhost:8080/role/create
+GET localhost:9696/role/all
 Content-Type: application/json
-
-{
-  "name": "STUDENT"
-}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1ODYyMzY1NDQsInVzZXJfbmFtZSI6ImFsZXgiLCJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sImp0aSI6ImNjY2Q4YzI2LWIyZmItNDU3OC1iZWM1LWU3N2MwOTU0Yzc3ZiIsImNsaWVudF9pZCI6InZ1ZS1jbGllbnQiLCJzY29wZSI6WyJhbnkiXX0.pG2705neB4wXmjrG7RozvvhFjMCqJB0UE6SoLHWOGy0
 
 ###

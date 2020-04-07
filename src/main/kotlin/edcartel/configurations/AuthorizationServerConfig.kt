@@ -34,11 +34,11 @@ class AuthorizationServerConfig(
     override fun configure(clients : ClientDetailsServiceConfigurer) {
         clients
             .inMemory()
-                .withClient("vue-client").secret(passwordEncoder.encode("vue-password"))
-                .authorizedGrantTypes("client_credentials", "password", "refresh_token")
-                .scopes("any")
-                .accessTokenValiditySeconds(250 * 60)
-                .refreshTokenValiditySeconds(500 * 60)
+            .withClient("vue-client").secret(passwordEncoder.encode("vue-password"))
+            .authorizedGrantTypes("client_credentials", "password", "refresh_token")
+            .scopes("any")
+            .accessTokenValiditySeconds(250 * 60)
+            .refreshTokenValiditySeconds(500 * 60)
     }
 
     override fun configure(endpoints : AuthorizationServerEndpointsConfigurer) {
