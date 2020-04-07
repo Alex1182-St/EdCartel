@@ -69,9 +69,20 @@ data class UserEntity(
     @Column(unique = true)
     val git : String? = null,
 
+ /*   @ManyToMany(
+            fetch = FetchType.EAGER,
+            cascade = [CascadeType.PERSIST, CascadeType.MERGE]
+    )
+
+  */
     @ManyToMany(
             fetch = FetchType.EAGER,
             cascade = [CascadeType.PERSIST, CascadeType.MERGE]
+    )
+    @JoinTable(
+            name = "users_courses",
+            joinColumns = [JoinColumn(name = "user_id", referencedColumnName = "id")],
+            inverseJoinColumns = [JoinColumn(name = "course_id", referencedColumnName = "id")]
     )
     val courses : Set<CourseEntity> = setOf()
 

@@ -30,13 +30,9 @@ data class CourseEntity(
         val courseDiscount : Int? = null,
 
         @ManyToMany(
+                mappedBy = "courses",
                 fetch = FetchType.EAGER,
                 cascade = [CascadeType.PERSIST, CascadeType.MERGE]
-        )
-        @JoinTable(
-                name = "courses_users",
-                joinColumns = [JoinColumn(name = "courses_id", referencedColumnName = "id")],
-                inverseJoinColumns = [JoinColumn(name = "users_id", referencedColumnName = "id")]
         )
         val courseAuthor : Set<UserEntity> = setOf()
 
