@@ -3,7 +3,7 @@ package edcartel.user.DTOs
 import java.io.Serializable
 import java.util.*
 
-data class UserViewTDO(
+data class UserViewDTO(
 
     val id : UUID,
 
@@ -11,7 +11,7 @@ data class UserViewTDO(
 
     val password : String,
 
-    val roles : Collection<RoleViewTDO> = setOf(),
+    val roles : Collection<RoleViewDTO> = setOf(),
 
     val isEnabled : Boolean = false,
 

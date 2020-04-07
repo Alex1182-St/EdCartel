@@ -1,28 +1,18 @@
 package edcartel.user.DTOs.converters
 
-import edcartel.user.DTOs.RoleViewTDO
-import edcartel.user.DTOs.RoleViewWithUsersTDO
+import edcartel.user.DTOs.RoleViewDTO
+import edcartel.user.DTOs.RoleViewWithUsersDTO
 import edcartel.user.entities.RoleEntity
 
-
-fun RoleEntity.toViewTDO() = RoleViewTDO(
-
+fun RoleEntity.toViewDTO() = RoleViewDTO(
     id = id!!,
-
     name = name,
-
     description = description
-
 )
 
-fun RoleEntity.toViewWithUsersTDO() = RoleViewWithUsersTDO(
-
+fun RoleEntity.toViewWithUsersDTO() = RoleViewWithUsersDTO(
     id = id!!,
-
     name = name,
-
     description = description,
-
     users = this.users.map { it.id }
-
 )

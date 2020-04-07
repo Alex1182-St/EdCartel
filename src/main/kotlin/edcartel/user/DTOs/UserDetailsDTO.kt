@@ -4,7 +4,7 @@ import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 import java.util.*
 
-data class UserDetailsTDO(
+data class UserDetailsDTO(
 
     private val id : UUID,
 
