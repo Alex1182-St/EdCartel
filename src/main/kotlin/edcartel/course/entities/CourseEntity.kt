@@ -31,7 +31,7 @@ data class CourseEntity(
 
         @ManyToMany(
                 mappedBy = "courses",
-                fetch = FetchType.EAGER,
+                fetch = FetchType.LAZY,
                 cascade = [CascadeType.PERSIST, CascadeType.MERGE]
         )
         val courseAuthor : Set<UserEntity> = setOf()
