@@ -1,7 +1,7 @@
 package edcartel.user.controllers
 
-import edcartel.user.DTOs.UserViewTDO
-import edcartel.user.DTOs.converters.toViewTDO
+import edcartel.user.DTOs.UserViewDTO
+import edcartel.user.DTOs.converters.toViewDTO
 import edcartel.user.entities.RoleEnum
 import edcartel.user.entities.UserEntity
 import edcartel.user.repositories.RoleRepository
@@ -22,19 +22,19 @@ class UserController(val userRepo : UserRepository, val roleRepo : RoleRepositor
 
     @GetMapping("all")
     @PreAuthorize("hasRole('ADMIN')")
-    fun findAll() : List<UserViewTDO> =
+    fun findAll() : List<UserViewDTO> =
         userRepo.findAll()
-            .map { it.toViewTDO() }
+            .map { it.toViewDTO() }
 
     @GetMapping("{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    fun findById(@PathVariable id : UUID) : UserViewTDO =
+    fun findById(@PathVariable id : UUID) : UserViewDTO =
         userRepo.findById(id)
-            .map { it.toViewTDO() }
+            .map { it.toViewDTO() }
             .orElseThrow { UsernameNotFoundException("User not found with id: $id") }
 
     @PostMapping
-    fun create(@Valid @RequestBody newUser : UserCreateInput) : UserViewTDO {
+    fun create(@Valid @RequestBody newUser : UserCreateInput) : UserViewDTO {
         val user = UserEntity(
             username = newUser.username,
             password = newUser.password,
@@ -43,11 +43,11 @@ class UserController(val userRepo : UserRepository, val roleRepo : RoleRepositor
             roles = setOf(roleRepo.findByName(RoleEnum.USER))
         )
 
-        return userRepo.save(user).toViewTDO()
+        return userRepo.save(user).toViewDTO()
     }
 
-    @PutMapping("/{id}")
-    fun update(@PathVariable id : UUID, @Valid @RequestBody input : UserUpdateInput) : UserViewTDO {
+    @PutMapping("{id}")
+    fun update(@PathVariable id : UUID, @Valid @RequestBody input : UserUpdateInput) : UserViewDTO {
         val userOld = userRepo.findById(id)
             .orElseThrow { UsernameNotFoundException("User not found with id: $id") }
 
@@ -62,13 +62,13 @@ class UserController(val userRepo : UserRepository, val roleRepo : RoleRepositor
         )
 
         return if (userOld != userNew) {
-            userRepo.save(userNew).toViewTDO()
+            userRepo.save(userNew).toViewDTO()
         } else {
-            userOld.toViewTDO()
+            userOld.toViewDTO()
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("{id}")
     fun remove(@PathVariable id : UUID) = userRepo.deleteById(id)
 
 }

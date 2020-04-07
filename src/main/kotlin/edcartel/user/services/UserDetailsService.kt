@@ -1,7 +1,7 @@
 package edcartel.user.services
 
-import edcartel.user.DTOs.UserDetailsTDO
-import edcartel.user.DTOs.converters.toDetailsTDO
+import edcartel.user.DTOs.UserDetailsDTO
+import edcartel.user.DTOs.converters.toDetailsDTO
 import edcartel.user.repositories.UserRepository
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
@@ -23,10 +23,10 @@ class UserDetailsService(val userRepo : UserRepository) : UserDetailsService {
      *
      * @throws UsernameNotFoundException if the user could not be found, or the user has no GrantedAuthority
      */
-    override fun loadUserByUsername(username : String) : UserDetailsTDO {
+    override fun loadUserByUsername(username : String) : UserDetailsDTO {
         val user = userRepo.getByUsername(username)
             .orElseThrow { UsernameNotFoundException("User not found with username: $username") }
 
-        return user.toDetailsTDO()
+        return user.toDetailsDTO()
     }
 }

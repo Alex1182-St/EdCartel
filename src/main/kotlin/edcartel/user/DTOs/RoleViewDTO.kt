@@ -4,7 +4,7 @@ import edcartel.user.entities.RoleEnum
 import java.io.Serializable
 import java.util.*
 
-data class RoleViewTDO(
+data class RoleViewDTO(
 
     val id : UUID,
 
