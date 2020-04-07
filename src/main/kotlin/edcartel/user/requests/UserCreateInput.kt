@@ -1,13 +1,19 @@
 package edcartel.user.requests
 
+import org.hibernate.validator.constraints.Length
+
 data class UserCreateInput(
 
+    @field:Length(min = 2, max = 255)
     val username : String,
 
+    @field:Length(min = 2, max = 255)
     val password : String,
 
+    @field:Length(min = 2, max = 255)
     val firstName : String,
 
+    @field:Length(min = 2, max = 255)
     val familyName : String,
 
     val aboutSelf : String?,

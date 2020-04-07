@@ -15,11 +15,13 @@ spring:
     lazy-initialization: true
     allow-bean-definition-overriding: true
   datasource:
-    url: "jdbc:postgresql://${DATABASE_HOST:localhost}:5432/testDB"
+    url: "jdbc:postgresql://${DATABASE_HOST:localhost}:${DATABASE_PORT:5432}/testDB"
     name: "testDB"
     username: "userDB"
     password: "userDB"
     initialization-mode: always
+    hikari:
+      isolate-internal-queries: true
   jpa:
     show-sql: false
     generate-ddl: true
