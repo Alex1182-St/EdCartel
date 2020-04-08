@@ -10,11 +10,19 @@ import java.util.*
 @Service
 class CourseService (val courseRepo : CourseRepository)
 {
-    fun updateCourse(courseId: UUID, authorId: Set<UserEntity>, course: CourseEntity) {
-        val ourArrayFromCourse = arrayOf(course)
+    fun updateCourse(courseId: UUID,  course: CourseEntity) {
+
+        val oldCourse : Optional<CourseEntity> = courseRepo.findById(courseId)
+        val authorId : Set<UserEntity> = course.courseAuthor
+        val ourArrayFromCourse = arrayOf(oldCourse)
+
         for (element in ourArrayFromCourse) {
             if (element.equals(authorId)){
-                courseRepo.save(course)
+                if (oldCourse!=course) {
+                    courseRepo.save(course)
+                }
+                else {
+                    throw Exception("Such course with $courseId is absent or has nothing to update")}
             }
             else {
                 throw Exception ("You do not have rights to update course")
@@ -22,10 +30,13 @@ class CourseService (val courseRepo : CourseRepository)
         }
 }
 
-    fun deleteCourse(courseId : UUID, authorId : UUID) {
-        val ourListFromCourse = listOf<Any>(courseRepo.findById(courseId))
+    fun deleteCourse(body : Map<String, Any>) {
+        val oldCourse : Optional<CourseEntity> = courseRepo.findById(body.get("id") as UUID)
+        val authorId : Set<UserEntity> = body.get("courseAuthor") as Set<UserEntity>
+        val ourListFromCourse = listOf<Any>(oldCourse)
+
             if (ourListFromCourse.contains(authorId)) {
-                        courseRepo.deleteById(courseId)
+                        courseRepo.deleteById(body.get("id") as UUID)
         }
             else {
                 throw Exception ("You do not have rights to delete course")

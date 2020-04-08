@@ -34,20 +34,14 @@ class CourseController(val courseRepo : CourseRepository, val courseServ : Cours
             throw Exception("Course with name $courseName is not present")
     }
 
-    @PutMapping("byId/{id}")
+    @PutMapping("updateById/{id}")
     fun updateCourse(@PathVariable id : UUID, @RequestBody updatedCourse : CourseEntity) {
-        val oldCourse : Optional<CourseEntity> = courseRepo.findById(id)
-        val authorId : Set<UserEntity> = updatedCourse.courseAuthor
-        if (oldCourse!=updatedCourse) {
-            courseServ.updateCourse(id, authorId, updatedCourse)
-        }
-        else
-            throw Exception("Such course with $id is absent or has nothing to update")
+        courseServ.updateCourse(id, updatedCourse)
     }
 
-    @DeleteMapping("byId/{id}")
-    fun deleteCourse(@PathVariable id : UUID, authorId : UUID) {
-        courseServ.deleteCourse(id, authorId)
+    @PostMapping("deleteById")
+    fun deleteCourse(@RequestBody credentialsOfCourseToDelete : Map<String, Any>) {
+        courseServ.deleteCourse(credentialsOfCourseToDelete)
     }
 }
 

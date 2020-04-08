@@ -1,5 +1,6 @@
 package edcartel.course.entities
 
+import edcartel.user.entities.RoleEntity
 import edcartel.user.entities.UserEntity
 import java.util.*
 import javax.persistence.*
@@ -11,6 +12,7 @@ data class CourseEntity(
 
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
+        @Column(updatable = false, nullable = false)
         val id : UUID? = null,
 
         val courseName : String? = null,
@@ -36,4 +38,4 @@ data class CourseEntity(
         )
         val courseAuthor : Set<UserEntity> = setOf()
 
-)
+        )
