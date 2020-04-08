@@ -2,6 +2,7 @@ package edcartel.course.services
 
 import edcartel.course.entities.CourseEntity
 import edcartel.course.repositories.CourseRepository
+import edcartel.user.entities.UserEntity
 import org.springframework.stereotype.Service
 import java.util.*
 
@@ -9,7 +10,7 @@ import java.util.*
 @Service
 class CourseService (val courseRepo : CourseRepository)
 {
-    fun updateCourse(courseId : UUID, authorId : UUID, course : CourseEntity) {
+    fun updateCourse(courseId: UUID, authorId: Set<UserEntity>, course: CourseEntity) {
         val ourArrayFromCourse = arrayOf(course)
         for (element in ourArrayFromCourse) {
             if (element.equals(authorId)){
