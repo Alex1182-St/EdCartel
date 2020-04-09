@@ -10,7 +10,7 @@ import java.util.*
 @Service
 class CourseService (val courseRepo : CourseRepository)
 {
-    fun updateCourse(courseId: UUID,  course: CourseEntity) {
+    fun updateCourse(courseId : UUID,  course : CourseEntity) {
 
         val oldCourse : Optional<CourseEntity> = courseRepo.findById(courseId)
         val authorId : Set<UserEntity> = course.courseAuthor

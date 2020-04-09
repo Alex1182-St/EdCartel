@@ -19,29 +19,22 @@ class CourseController(val courseRepo : CourseRepository, val courseServ : Cours
 
     @GetMapping("byId/{id}")
     fun findCourseById(@PathVariable id : UUID) {
-        if (courseRepo.findById(id) != null) {
-            courseRepo.findById(id)
-        }
-        else
-            throw Exception("Course with $id is not present")
+        courseRepo.findById(id)
     }
 
     @GetMapping("byName/{courseName}")
     fun findCourseByName(@PathVariable courseName : String) {
-        if (courseRepo.findByCourseName(courseName) != null) {
-            courseRepo.findByCourseName(courseName)
-        } else
-            throw Exception("Course with name $courseName is not present")
+        courseRepo.findByCourseName(courseName)
     }
 
     @PutMapping("updateById/{id}")
     fun updateCourse(@PathVariable id : UUID, @RequestBody updatedCourse : CourseEntity) {
-        courseServ.updateCourse(id, updatedCourse)
+        return courseServ.updateCourse(id, updatedCourse)
     }
 
     @PostMapping("deleteById")
-    fun deleteCourse(@RequestBody credentialsOfCourseToDelete : Map<String, Any>) {
-        courseServ.deleteCourse(credentialsOfCourseToDelete)
+    fun deleteCourse(@RequestBody credentialsOfCourseToBeDeleted : Map<String, Any>) {
+        return courseServ.deleteCourse(credentialsOfCourseToBeDeleted)
     }
 }
 
