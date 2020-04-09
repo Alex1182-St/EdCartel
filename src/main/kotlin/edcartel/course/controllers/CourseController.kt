@@ -19,13 +19,14 @@ class CourseController(val courseRepo : CourseRepository, val courseServ : Cours
 
     @GetMapping("byId/{id}")
     fun findCourseById(@PathVariable id : UUID) {
-        if (courseRepo.findById(id).isPresent) {
+        if (courseRepo.findById(id)!=null) {
             courseRepo.findById(id)
         }
         else {
             throw Exception("Course with such $id is absent")
         }
     }
+    //ourseRepo.findById(id).orElseThrow() ????
 
     @GetMapping("byName/{courseName}")
     fun findCourseByName(@PathVariable courseName : String) {
