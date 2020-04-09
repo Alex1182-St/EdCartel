@@ -31,7 +31,7 @@ class CourseService (val courseRepo : CourseRepository)
 }
 
     fun deleteCourse(body : Map<String, Any>) {
-        val oldCourse : Optional<CourseEntity> = courseRepo.findById(body.get("id") as UUID)
+        val oldCourse : CourseEntity = courseRepo.findById(body.get("id") as UUID).get()
         val authorId : Set<UserEntity> = body.get("courseAuthor") as Set<UserEntity>
         val ourListFromCourse = listOf<Any>(oldCourse)
 

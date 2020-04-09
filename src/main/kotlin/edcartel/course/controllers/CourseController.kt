@@ -3,6 +3,7 @@ package edcartel.course.controllers
 import edcartel.course.entities.CourseEntity
 import edcartel.course.repositories.CourseRepository
 import edcartel.course.services.CourseService
+import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.web.bind.annotation.*
 import java.util.*
 import kotlin.Exception
@@ -18,25 +19,18 @@ class CourseController(val courseRepo : CourseRepository, val courseServ : Cours
     }
 
     @GetMapping("byId/{id}")
-    fun findCourseById(@PathVariable id : UUID) {
-        if (courseRepo.findById(id)!=null) {
-            courseRepo.findById(id)
-        }
-        else {
-            throw Exception("Course with such $id is absent")
-        }
+    fun findCourseById(@PathVariable id : UUID) : CourseEntity {
+            return courseRepo.findById(id).orElseThrow {
+                Exception("Course not found with id: $id") }
     }
-    //ourseRepo.findById(id).orElseThrow() ????
+
 
     @GetMapping("byName/{courseName}")
-    fun findCourseByName(@PathVariable courseName : String) {
-        if (courseRepo.findByCourseName(courseName)!=null) {
-            courseRepo.findByCourseName(courseName)
-        }
-        else {
-            throw Exception("Course with such $courseName is absent")
-        }
+    fun findCourseByName(@PathVariable courseName : String) : CourseEntity {
+           return courseRepo.findByCourseName(courseName).orElseThrow {
+               Exception("User not found with name: $courseName") }
 
+        }
 
     @PutMapping("updateById/{id}")
     fun updateCourse(@PathVariable id : UUID, @RequestBody updatedCourse : CourseEntity) {
@@ -47,7 +41,7 @@ class CourseController(val courseRepo : CourseRepository, val courseServ : Cours
     fun deleteCourse(@RequestBody credentialsOfCourseToBeDeleted : Map<String, Any>) {
         return courseServ.deleteCourse(credentialsOfCourseToBeDeleted)
     }
-}}
+}
 
 
 
