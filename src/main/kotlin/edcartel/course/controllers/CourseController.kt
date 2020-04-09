@@ -3,9 +3,9 @@ package edcartel.course.controllers
 import edcartel.course.entities.CourseEntity
 import edcartel.course.repositories.CourseRepository
 import edcartel.course.services.CourseService
-import edcartel.user.entities.UserEntity
 import org.springframework.web.bind.annotation.*
 import java.util.*
+import kotlin.Exception
 
 
 @RestController
@@ -19,13 +19,23 @@ class CourseController(val courseRepo : CourseRepository, val courseServ : Cours
 
     @GetMapping("byId/{id}")
     fun findCourseById(@PathVariable id : UUID) {
-        courseRepo.findById(id)
+        if (courseRepo.findById(id).isPresent) {
+            courseRepo.findById(id)
+        }
+        else {
+            throw Exception("Course with such $id is absent")
+        }
     }
 
     @GetMapping("byName/{courseName}")
     fun findCourseByName(@PathVariable courseName : String) {
-        courseRepo.findByCourseName(courseName)
-    }
+        if (courseRepo.findByCourseName(courseName)!=null) {
+            courseRepo.findByCourseName(courseName)
+        }
+        else {
+            throw Exception("Course with such $courseName is absent")
+        }
+
 
     @PutMapping("updateById/{id}")
     fun updateCourse(@PathVariable id : UUID, @RequestBody updatedCourse : CourseEntity) {
@@ -36,7 +46,7 @@ class CourseController(val courseRepo : CourseRepository, val courseServ : Cours
     fun deleteCourse(@RequestBody credentialsOfCourseToBeDeleted : Map<String, Any>) {
         return courseServ.deleteCourse(credentialsOfCourseToBeDeleted)
     }
-}
+}}
 
 
 

@@ -1,7 +1,7 @@
 package edcartel.course.entities
 
-import edcartel.user.entities.RoleEntity
 import edcartel.user.entities.UserEntity
+import org.hibernate.validator.constraints.Length
 import java.util.*
 import javax.persistence.*
 
@@ -15,20 +15,31 @@ data class CourseEntity(
         @Column(updatable = false, nullable = false)
         val id : UUID? = null,
 
+        @field:Length(min = 2, max = 255)
+        @Column(nullable = false)
         val courseName : String? = null,
 
+        @Column(nullable = false)
         val lessonsQuantity : Int? = null,
 
+        @Column(nullable = false)
         val hoursQuantity : Long? = null,
 
+        @Column(nullable = true)
         val levelOfCourse : String? = null,
 
+        @field:Length(min = 2, max = 1024)
+        @Column(nullable = false)
         val shortDescription : String? = null,
 
+        @field:Length(min = 2, max = 4096)
+        @Column(nullable = false)
         val longDescription : String? = null,
 
+        @Column(nullable = true)
         val courseCost : Long? = null,
 
+        @Column(nullable = true)
         val courseDiscount : Int? = null,
 
         @ManyToMany(
