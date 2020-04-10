@@ -21,16 +21,14 @@ class CourseController(val courseRepo : CourseRepository, val courseServ : Cours
     @GetMapping("byId/{id}")
     fun findCourseById(@PathVariable id : UUID) : CourseEntity {
             return courseRepo.findById(id).orElseThrow {
-                Exception("Course not found with id: $id") }
+                Exception("Course not found with such id: $id") }
     }
-
 
     @GetMapping("byName/{courseName}")
     fun findCourseByName(@PathVariable courseName : String) : CourseEntity {
            return courseRepo.findByCourseName(courseName).orElseThrow {
-               Exception("User not found with name: $courseName") }
-
-        }
+               Exception("Course not found with such name: $courseName") }
+    }
 
     @PutMapping("updateById/{id}")
     fun updateCourse(@PathVariable id : UUID, @RequestBody updatedCourse : CourseEntity) {
