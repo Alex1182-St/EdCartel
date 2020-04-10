@@ -13,7 +13,7 @@ class CourseService (val courseRepo : CourseRepository)
     fun updateCourse(courseId : UUID,  course : CourseEntity) {
 
         val oldCourse : Optional<CourseEntity> = courseRepo.findById(courseId)
-        val authorId : Set<UserEntity> = course.courseAuthor
+        val authorId : Collection<UserEntity> = course.author
         val ourArrayFromCourse = arrayOf(oldCourse)
 
         for (element in ourArrayFromCourse) {

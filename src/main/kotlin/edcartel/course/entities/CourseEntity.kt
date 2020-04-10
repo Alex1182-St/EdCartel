@@ -17,7 +17,7 @@ data class CourseEntity(
 
         @field:Length(min = 2, max = 255)
         @Column(nullable = false)
-        val courseName : String? = null,
+        val name : String? = null,
 
         @Column(nullable = false)
         val lessonsQuantity : Int? = null,
@@ -37,16 +37,16 @@ data class CourseEntity(
         val longDescription : String? = null,
 
         @Column(nullable = true)
-        val courseCost : Long? = null,
+        val cost : Long? = null,
 
         @Column(nullable = true)
-        val courseDiscount : Int? = null,
+        val discount : Int? = null,
 
         @ManyToMany(
                 mappedBy = "courses",
                 fetch = FetchType.LAZY,
                 cascade = [CascadeType.PERSIST, CascadeType.MERGE]
         )
-        val courseAuthor : Set<UserEntity> = setOf()
+        val author : Collection<UserEntity> = setOf()
 
         )

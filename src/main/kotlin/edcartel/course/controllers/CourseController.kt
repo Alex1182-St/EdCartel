@@ -1,5 +1,7 @@
 package edcartel.course.controllers
 
+import edcartel.course.DTOs.CourseViewDTO
+import edcartel.course.DTOs.converters.toViewDTO
 import edcartel.course.entities.CourseEntity
 import edcartel.course.repositories.CourseRepository
 import edcartel.course.services.CourseService
@@ -14,13 +16,14 @@ import kotlin.Exception
 class CourseController(val courseRepo : CourseRepository, val courseServ : CourseService) {
 
     @PostMapping
-    fun createCourse(@RequestBody newCourse : CourseEntity) : CourseEntity {
-        return  courseRepo.save(newCourse)
+    fun createCourse(@RequestBody newCourse : CourseEntity) : CourseViewDTO {
+        return  courseRepo.save(newCourse).toViewDTO()
     }
 
     @GetMapping("byId/{id}")
-    fun findCourseById(@PathVariable id : UUID) : CourseEntity {
-            return courseRepo.findById(id).orElseThrow {
+    fun findCourseById(@PathVariable id : UUID) : CourseViewDTO {
+            return courseRepo.findById(id).toViewDTO()
+                    .orElseThrow {
                 Exception("Course not found with such id: $id") }
     }
 
