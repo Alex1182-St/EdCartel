@@ -17,4 +17,3 @@ fun CourseEntity.toViewDTO() = CourseViewDTO(
 
 )
 
-fun Class.funName() : returnType { return * }
