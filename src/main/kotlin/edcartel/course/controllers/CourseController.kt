@@ -21,8 +21,8 @@ class CourseController(val courseRepo : CourseRepository, val courseServ : Cours
     }
 
     @GetMapping("byId/{id}")
-    fun findCourseById(@PathVariable id : UUID) : CourseViewDTO {
-            return courseRepo.findById(id).toViewDTO()
+    fun findCourseById(@PathVariable id : UUID) : CourseEntity? {
+            return courseRepo.findById(id)
                     .orElseThrow {
                 Exception("Course not found with such id: $id") }
     }
@@ -31,6 +31,18 @@ class CourseController(val courseRepo : CourseRepository, val courseServ : Cours
     fun findCourseByName(@PathVariable courseName : String) : CourseEntity {
            return courseRepo.findByCourseName(courseName).orElseThrow {
                Exception("Course not found with such name: $courseName") }
+    }
+
+    @GetMapping("byCourseName/{courseName}")
+    fun CourseByName(@PathVariable courseName : String)  : CourseEntity {
+        val course = courseRepo.findByCourseName(courseName)
+        if (course.isPresent)
+        {
+            return course.get()
+        }
+        else {
+            throw Exception (" Not Found")
+        }
     }
 
     @PutMapping("updateById/{id}")

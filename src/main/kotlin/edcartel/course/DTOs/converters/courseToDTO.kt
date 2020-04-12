@@ -7,7 +7,6 @@ import edcartel.user.DTOs.converters.toViewDTO
 fun CourseEntity.toViewDTO() = CourseViewDTO(
         id = id,
         name = name,
-        lessonsQuantity = lessonsQuantity,
         hoursQuantity = hoursQuantity,
         levelOfCourse = levelOfCourse,
         shortDescription = shortDescription,

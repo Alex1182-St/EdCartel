@@ -9,8 +9,6 @@ data class CourseViewDTO(
 
         val name: String?,
 
-        val lessonsQuantity: Int?,
-
         val hoursQuantity: Long?,
 
         val levelOfCourse: String?,
