@@ -9,6 +9,6 @@ import java.util.*
 @Repository
 interface CourseRepository : JpaRepository<CourseEntity, UUID> {
 
-    fun findByCourseName(courseName : String) : Optional<CourseEntity>
+    fun findByName(courseName : String) : Optional<CourseEntity>
 
 }

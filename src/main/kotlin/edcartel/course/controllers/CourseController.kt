@@ -5,7 +5,6 @@ import edcartel.course.DTOs.converters.toViewDTO
 import edcartel.course.entities.CourseEntity
 import edcartel.course.repositories.CourseRepository
 import edcartel.course.services.CourseService
-import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.web.bind.annotation.*
 import java.util.*
 import kotlin.Exception
@@ -21,38 +20,29 @@ class CourseController(val courseRepo : CourseRepository, val courseServ : Cours
     }
 
     @GetMapping("byId/{id}")
-    fun findCourseById(@PathVariable id : UUID) : CourseEntity? {
+    fun findCourseById(@PathVariable id : UUID) : CourseViewDTO {
             return courseRepo.findById(id)
+                    .map { it.toViewDTO() }
                     .orElseThrow {
                 Exception("Course not found with such id: $id") }
     }
 
     @GetMapping("byName/{courseName}")
-    fun findCourseByName(@PathVariable courseName : String) : CourseEntity {
-           return courseRepo.findByCourseName(courseName).orElseThrow {
+    fun findCourseByName(@PathVariable courseName : String) : CourseViewDTO {
+           return courseRepo.findByName(courseName)
+                   .map {it.toViewDTO() }
+                   .orElseThrow {
                Exception("Course not found with such name: $courseName") }
     }
 
-    @GetMapping("byCourseName/{courseName}")
-    fun CourseByName(@PathVariable courseName : String)  : CourseEntity {
-        val course = courseRepo.findByCourseName(courseName)
-        if (course.isPresent)
-        {
-            return course.get()
-        }
-        else {
-            throw Exception (" Not Found")
-        }
-    }
-
     @PutMapping("updateById/{id}")
-    fun updateCourse(@PathVariable id : UUID, @RequestBody updatedCourse : CourseEntity) {
-        return courseServ.updateCourse(id, updatedCourse)
+    fun updateCourse(@PathVariable id : UUID, @RequestBody updatedCourse : CourseEntity): CourseViewDTO {
+        return courseServ.updateCourse(id, updatedCourse).toViewDTO()
     }
 
-    @PostMapping("deleteById")
-    fun deleteCourse(@RequestBody credentialsOfCourseToBeDeleted : Map<String, Any>) {
-        return courseServ.deleteCourse(credentialsOfCourseToBeDeleted)
+    @PostMapping("deleteById{id}")
+    fun deleteCourse(@PathVariable id : UUID ) {
+        return courseRepo.deleteById(id)
     }
 }
 

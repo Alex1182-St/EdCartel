@@ -5,6 +5,7 @@ import java.util.*
 
 
 data class CourseViewDTO(
+
         val id: UUID?,
 
         val name: String?,

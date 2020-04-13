@@ -87,7 +87,7 @@ data class UserEntity(
             joinColumns = [JoinColumn(name = "user_id", referencedColumnName = "id")],
             inverseJoinColumns = [JoinColumn(name = "course_id", referencedColumnName = "id")]
     )
-    val courses : Set<CourseEntity> = setOf()
+    val courses : Collection<CourseEntity> = setOf()
 
 
 ) : Serializable
