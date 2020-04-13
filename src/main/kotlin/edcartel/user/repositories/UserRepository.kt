@@ -8,6 +8,6 @@ import java.util.*
 @Repository
 interface UserRepository : JpaRepository<UserEntity, UUID> {
 
-    fun getByUsername(username : String) : Optional<UserEntity>
+    fun findByUsername(username : String) : Optional<UserEntity>
 
 }

@@ -7,72 +7,70 @@ import org.hibernate.annotations.Fetch
 import org.hibernate.annotations.FetchMode
 import java.util.*
 import javax.persistence.*
-import javax.validation.constraints.Max
-import javax.validation.constraints.Min
 
 
 @Entity
 @Table(name = "users")
 data class UserEntity(
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(updatable = false, nullable = false)
-    val id : UUID? = null,
+    @field:Id
+    @field:GeneratedValue(strategy = GenerationType.AUTO)
+    @field:Column(updatable = false, nullable = false)
+    val id : UUID = UUID.randomUUID(),
 
     @field:Length(min = 2, max = 255)
-    @Column(unique = true, nullable = false)
+    @field:Column(unique = true, nullable = false)
     val username : String = "",
 
     @field:Length(min = 2, max = 255)
-    @Column(nullable = false)
+    @field:Column(nullable = false)
     val password : String = "",
 
-    @ManyToMany(
+    @field:ManyToMany(
         fetch = FetchType.LAZY,
         cascade = [CascadeType.PERSIST, CascadeType.MERGE]
     )
-    @JoinTable(
+    @field:JoinTable(
         name = "users_roles",
         joinColumns = [JoinColumn(name = "user_id", referencedColumnName = "id")],
         inverseJoinColumns = [JoinColumn(name = "role_id", referencedColumnName = "id")]
     )
-    val roles : Collection<RoleEntity> = setOf(),
+    val roles : Collection<RoleEntity> = mutableSetOf(),
 
-    @Column(nullable = false)
+    @field:Column(nullable = false)
     val isEnabled : Boolean = true,
 
-    @Column(nullable = false)
+    @field:Column(nullable = false)
     val isAccountNonLocked : Boolean = true,
 
-    @Column(nullable = false)
+    @field:Column(nullable = false)
     val isAccountNonExpired : Boolean = true,
 
-    @Column(nullable = false)
+    @field:Column(nullable = false)
     val isCredentialsNonExpired : Boolean = true,
 
     @field:Length(min = 2, max = 255)
-    @Column(nullable = false)
+    @field:Column(nullable = false)
     val firstName : String = "",
 
     @field:Length(min = 2, max = 255)
-    @Column(nullable = false)
+    @field:Column(nullable = false)
     val familyName : String = "",
 
     @field:Lob
-    @Column(nullable = true)
-    val aboutSelf : String? = null,
+    @field:Column(nullable = false)
+    val aboutSelf : String = "",
 
-    @Column(nullable = true)
+    @field:Column(nullable = true)
     val gender : Boolean? = null,
 
-    @Column(unique = true, nullable = true)
+    @field:Column(unique = true, nullable = true)
     val email : String? = null,
 
-    @Column(unique = true, nullable = true)
+    @field:Column(unique = true, nullable = true)
     val phone : String? = null,
 
-    @Column(unique = true, nullable = true)
+    @field:Column(unique = true, nullable = true)
     val skype : String? = null,
 
     @Column(unique = true, nullable = true)
@@ -89,5 +87,7 @@ data class UserEntity(
     )
     val courses : Collection<CourseEntity> = setOf()
 
+    @field:Column(unique = true, nullable = true)
+    val git : String? = null
 
 ) : Serializable

@@ -8,19 +8,23 @@ import javax.persistence.*
 @Table(name = "roles")
 data class RoleEntity(
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(updatable = false, nullable = false)
-    val id : UUID? = null,
+    @field:Id
+    @field:GeneratedValue(strategy = GenerationType.AUTO)
+    @field:Column(updatable = false, nullable = false)
+    val id : UUID = UUID.randomUUID(),
 
-    @Enumerated(EnumType.STRING)
-    @Column(unique = true, nullable = false)
+    @field:Enumerated(EnumType.STRING)
+    @field:Column(unique = true, nullable = false)
     val name : RoleEnum = RoleEnum.USER,
 
-    @Column(nullable = false)
+    @field:Column(nullable = false)
     val description : String = "",
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "roles")
+    @field:ManyToMany(
+        fetch = FetchType.LAZY,
+        cascade = [CascadeType.PERSIST, CascadeType.MERGE],
+        mappedBy = "roles"
+    )
     val users : Collection<UserEntity> = setOf()
 
 )

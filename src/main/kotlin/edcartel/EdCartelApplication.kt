@@ -38,12 +38,12 @@ class EdCartelApplication(
                 UserEntity(
                     username = "alex", password = passwordEncoder.encode("alex"),
                     firstName = "alex", familyName = "alex",
-                    roles = setOf(roleRepo.findByName(RoleEnum.ADMIN))
+                    roles = mutableSetOf(roleRepo.findByName(RoleEnum.ADMIN), roleRepo.findByName(RoleEnum.ADMIN))
                 ),
                 UserEntity(
                     username = "daniel", password = passwordEncoder.encode("daniel"),
                     firstName = "daniel", familyName = "daniel",
-                    roles = setOf(roleRepo.findByName(RoleEnum.USER))
+                    roles = mutableSetOf(roleRepo.findByName(RoleEnum.USER))
                 )
             )
         )
