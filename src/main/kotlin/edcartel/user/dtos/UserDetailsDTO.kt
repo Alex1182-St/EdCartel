@@ -1,4 +1,4 @@
-package edcartel.user.DTOs
+package edcartel.user.dtos
 
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
@@ -14,13 +14,13 @@ data class UserDetailsDTO(
 
     private val authorities : Collection<GrantedAuthority>,
 
-    private val isEnabled : Boolean = false,
+    private val isEnabled : Boolean,
 
-    private val isAccountNonLocked : Boolean = false,
+    private val isAccountNonLocked : Boolean,
 
-    private val isAccountNonExpired : Boolean = false,
+    private val isAccountNonExpired : Boolean,
 
-    private val isCredentialsNonExpired : Boolean = false
+    private val isCredentialsNonExpired : Boolean
 
 ) : UserDetails {
 
