@@ -40,7 +40,7 @@ class CourseController(val courseRepo : CourseRepository, val courseServ : Cours
         return courseServ.updateCourse(id, updatedCourse).toViewDTO()
     }
 
-    @PostMapping("deleteById{id}")
+    @DeleteMapping("deleteById{id}")
     fun deleteCourse(@PathVariable id : UUID ) {
         return courseRepo.deleteById(id)
     }
