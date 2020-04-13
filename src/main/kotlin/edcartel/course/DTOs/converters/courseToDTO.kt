@@ -2,7 +2,8 @@ package edcartel.course.DTOs.converters
 
 import edcartel.course.DTOs.CourseViewDTO
 import edcartel.course.entities.CourseEntity
-import edcartel.user.DTOs.converters.toViewDTO
+import edcartel.user.dtos.converters.toViewDTO
+
 
 fun CourseEntity.toViewDTO() = CourseViewDTO(
         id = id,

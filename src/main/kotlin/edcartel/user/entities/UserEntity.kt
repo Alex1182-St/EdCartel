@@ -73,7 +73,7 @@ data class UserEntity(
     @field:Column(unique = true, nullable = true)
     val skype : String? = null,
 
-    @Column(unique = true, nullable = true)
+    @field:Column(unique = true, nullable = true)
     val git : String? = null,
 
     @ManyToMany(
@@ -86,8 +86,5 @@ data class UserEntity(
             inverseJoinColumns = [JoinColumn(name = "course_id", referencedColumnName = "id")]
     )
     val courses : Collection<CourseEntity> = setOf()
-
-    @field:Column(unique = true, nullable = true)
-    val git : String? = null
 
 ) : Serializable

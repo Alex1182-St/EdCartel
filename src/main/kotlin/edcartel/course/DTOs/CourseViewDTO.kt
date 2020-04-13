@@ -1,6 +1,6 @@
 package edcartel.course.DTOs
 
-import edcartel.user.DTOs.UserViewDTO
+import edcartel.user.dtos.UserViewDTO
 import java.util.*
 
 
