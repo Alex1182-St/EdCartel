@@ -9,25 +9,30 @@ import java.util.*
 @Service
 class CourseService (val courseRepo : CourseRepository)
 {
-    fun updateCourse(courseId : UUID,  course : CourseEntity) : CourseEntity {
+    fun updateCourse(courseId : UUID,  course : CourseEntity): CourseEntity {
 
         val oldCourse = courseRepo.findById(courseId)
                 .orElseThrow{ Exception("Course not found with such id: $courseId") }
+
         val authorsFromOldCourse = oldCourse.author
         val authorsFromNewCourse = course.author
 
-        return if (oldCourse != course && authorsFromOldCourse == authorsFromNewCourse) {
-                  courseRepo.save(course)
-        }
-        else {
-            throw Exception("There are nothing to update with course - courseId: $courseId")}
-    }}
-
-/*
-        for (n in authorsFromNewCourse)
-        {
+        for (n in authorsFromNewCourse) {
             for (o in authorsFromOldCourse) {
-                authorsFromNewCourse.
+                    if (n == o) {
+                        return if (oldCourse != course) {
+                             courseRepo.save(course)
+                    }
+                        else {
+                            throw Exception("There are nothing to update with course - courseId: $courseId")
+                        }
+                    }
+                    else {
+                            throw Exception("You are not an author of course - courseId: $courseId")
+                    }
+                }
             }
         }
-*/
+    }
+
+
