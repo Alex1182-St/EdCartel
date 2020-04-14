@@ -19,20 +19,20 @@ class CourseService (val courseRepo : CourseRepository)
 
         for (n in authorsFromNewCourse) {
             for (o in authorsFromOldCourse) {
-                    if (n == o) {
-                        return if (oldCourse != course) {
+                 return if (n == o) {
+                            if (oldCourse != course) {
                              courseRepo.save(course)
                     }
-                        else {
-                            throw Exception("There are nothing to update with course - courseId: $courseId")
+                            else {
+                                throw Exception("There are nothing to update with course - courseId: $courseId")
                         }
                     }
                     else {
                             throw Exception("You are not an author of course - courseId: $courseId")
-                    }
-                }
+                 }
             }
         }
     }
+
 
 
