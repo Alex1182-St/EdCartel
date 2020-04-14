@@ -15,6 +15,14 @@ class CourseService (val courseRepo : CourseRepository)
                 .orElseThrow{ Exception("Course not found with such id: $courseId") }
         val authorsFromOldCourse = oldCourse.author
         val authorsFromNewCourse = course.author
+
+        return if (oldCourse != course && authorsFromOldCourse == authorsFromNewCourse) {
+                  courseRepo.save(course)
+        }
+        else {
+            throw Exception("There are nothing to update with course - courseId: $courseId")}
+    }}
+
 /*
         for (n in authorsFromNewCourse)
         {
@@ -23,10 +31,3 @@ class CourseService (val courseRepo : CourseRepository)
             }
         }
 */
-        return if (oldCourse != course && authorsFromOldCourse == authorsFromNewCourse) {
-                  courseRepo.save(course)
-        }
-        else {
-            throw Exception("There are nothing to update with course - courseId: $courseId")}
-    }}
-
