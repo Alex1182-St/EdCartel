@@ -19,9 +19,9 @@ class CourseService (val courseRepo : CourseRepository)
 
         for (n in authorsFromNewCourse) {
             for (o in authorsFromOldCourse) {
-                 return if (n == o) {
+                 if (n == o) { // n.username == o.username ??????
                             if (oldCourse != course) {
-                             courseRepo.save(course)
+                                return courseRepo.save(course)
                     }
                             else {
                                 throw Exception("There are nothing to update with course - courseId: $courseId")
@@ -32,7 +32,7 @@ class CourseService (val courseRepo : CourseRepository)
                  }
             }
         }
-    }
+    }}
 
 
 
