@@ -12,7 +12,7 @@ class CourseService (val courseRepo : CourseRepository)
     fun updateCourse(courseId : UUID,  course : CourseEntity): CourseEntity {
 
         val oldCourse = courseRepo.findById(courseId)
-                .orElseThrow{ Exception("Course not found with such id: $courseId") }
+                .orElseThrow { Exception("Course not found with such id: $courseId") }
 
         val authorsFromOldCourse = oldCourse.author
         val authorsFromNewCourse = course.author
@@ -27,12 +27,13 @@ class CourseService (val courseRepo : CourseRepository)
                                 throw Exception("There are nothing to update with course - courseId: $courseId")
                         }
                     }
-                    else {
+                 else {
                             throw Exception("You are not an author of course - courseId: $courseId")
                  }
             }
         }
-    }}
+    }
+}
 
 
 
