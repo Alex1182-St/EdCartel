@@ -2,38 +2,49 @@ package edcartel.course.services
 
 import edcartel.course.entities.CourseEntity
 import edcartel.course.repositories.CourseRepository
+import edcartel.course.requests.CourseUpdateInput
+import edcartel.user.repositories.UserRepository
 import org.springframework.stereotype.Service
 import java.util.*
 
 
 @Service
-class CourseService (val courseRepo : CourseRepository)
-{
-    fun updateCourse(courseId : UUID,  course : CourseEntity): CourseEntity {
+class CourseService(val courseRepo : CourseRepository, val userRepo : UserRepository) {
 
-        val oldCourse = courseRepo.findById(courseId)
-                .orElseThrow { Exception("Course not found with such id: $courseId") }
+  fun updateCourse(courseId : UUID, courseUpdateInput : CourseUpdateInput) : CourseEntity {
 
-        val authorsFromOldCourse = oldCourse.author
-        val authorsFromNewCourse = course.author
+      val oldCourse = courseRepo.findById(courseId)
+              .orElseThrow { Exception("Course not found with such id: $courseId") }
 
-        for (n in authorsFromNewCourse) {
-            for (o in authorsFromOldCourse) {
-                 if (n == o) { // n.username == o.username ??????
-                            if (oldCourse != course) {
-                                return courseRepo.save(course)
-                    }
-                            else {
-                                throw Exception("There are nothing to update with course - courseId: $courseId")
-                        }
-                    }
-                 else {
-                            throw Exception("You are not an author of course - courseId: $courseId")
-                 }
-            }
-        }
+      val authorEntitiesOfOldCourse = oldCourse.author
+              // ЕСЛИ АВТОРА НЕТ, NULL ?????
+
+      val authorIdOfUpdateCourse : UUID = courseUpdateInput.author
+
+
+      val authorEntityOfUpdateCourse = userRepo.findById(authorIdOfUpdateCourse)
+              .orElseThrow { Exception("Author not found with such id: $authorIdOfUpdateCourse") }
+
+      val isPresent = authorEntitiesOfOldCourse.contains(authorEntityOfUpdateCourse)
+
+      if (isPresent == true) {
+
+      val updatedCourse = CourseEntity (
+              name = courseUpdateInput.name,
+              lessonsQuantity = courseUpdateInput.lessonsQuantity,
+              hoursQuantity = courseUpdateInput.hoursQuantity,
+              levelOfCourse = courseUpdateInput.levelOfCourse,
+              shortDescription = courseUpdateInput.shortDescription,
+              longDescription = courseUpdateInput.longDescription,
+              cost = courseUpdateInput.cost
+           )
+          return updatedCourse
+      }
+      else
+      {
+          throw Exception ("You do not have rights to update course with id: $courseId. You are not author")
+      }
+
+  }
+
     }
-}
-
-
-
