@@ -13,14 +13,15 @@ class CourseService(val courseRepo : CourseRepository, val userRepo : UserReposi
 
   fun updateCourse(courseId : UUID, courseUpdateInput : CourseUpdateInput) : CourseEntity {
 
-      val oldCourse = courseRepo.findById(courseId)
-              .orElseThrow { Exception("Course not found with such id: $courseId") }
-
-      val authorEntitiesOfOldCourse = oldCourse.author
-              // ЕСЛИ АВТОРА НЕТ, NULL ?????
-
       val authorIdOfUpdateCourse : UUID = courseUpdateInput.author
+              ?: throw Exception ("You have not entered id of author of course, that you want to update")
 
+      val oldCourse = courseRepo.findById(courseId)
+              .orElseThrow { Exception("Course with id: $courseId, that you want to update, is not found.") }
+
+      val authorEntitiesOfOldCourse = oldCourse?.author
+              ?: throw Exception ("Course, that you want to update, does not have authors." +
+                      "Checking for author rights is impossible.")
 
       val authorEntityOfUpdateCourse = userRepo.findById(authorIdOfUpdateCourse)
               .orElseThrow { Exception("Author not found with such id: $authorIdOfUpdateCourse") }

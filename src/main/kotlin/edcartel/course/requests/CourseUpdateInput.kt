@@ -18,7 +18,7 @@ data class CourseUpdateInput(
 
         val cost: Long?,
 
-        val author: UUID
+        val author: UUID?
 
 
 )
