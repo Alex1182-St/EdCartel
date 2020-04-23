@@ -22,5 +22,5 @@ data class CourseViewDTO(
 
         val cost: Long?,
 
-        val author: Collection<UserViewDTO> = setOf()
+        val author: Collection<UUID>
 )

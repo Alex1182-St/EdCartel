@@ -2,7 +2,7 @@ package edcartel.course.DTOs.converters
 
 import edcartel.course.DTOs.CourseViewDTO
 import edcartel.course.entities.CourseEntity
-import edcartel.user.dtos.converters.toViewDTO
+
 
 
 fun CourseEntity.toViewDTO() = CourseViewDTO(
@@ -14,7 +14,7 @@ fun CourseEntity.toViewDTO() = CourseViewDTO(
         shortDescription = shortDescription,
         longDescription = longDescription,
         cost = cost,
-        author = author.map { it.toViewDTO() }
+        author = author.map { it.id }
 
 )
 
