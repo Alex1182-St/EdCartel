@@ -1,20 +1,17 @@
-package edcartel.user.requests
+package edcartel.user.dtos.input
 
 import org.hibernate.validator.constraints.Length
 
-data class UserCreateInput(
+data class UserUpdateInput(
 
     @field:Length(min = 2, max = 255)
-    val username : String,
+    val username : String?,
 
     @field:Length(min = 2, max = 255)
-    val password : String,
+    val name : String?,
 
     @field:Length(min = 2, max = 255)
-    val firstName : String,
-
-    @field:Length(min = 2, max = 255)
-    val familyName : String,
+    val familyName : String?,
 
     val aboutSelf : String?,
 

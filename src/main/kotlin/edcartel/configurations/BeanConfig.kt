@@ -4,6 +4,7 @@ import edcartel.user.services.UserDetailsService
 import org.springframework.boot.web.servlet.FilterRegistrationBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Primary
 import org.springframework.core.Ordered
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
@@ -17,7 +18,6 @@ import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 import org.springframework.web.filter.CorsFilter
 import javax.servlet.Filter
-
 
 @Configuration
 class BeanConfig(private val userDetailsService : UserDetailsService) {
@@ -35,11 +35,9 @@ class BeanConfig(private val userDetailsService : UserDetailsService) {
         val userTokenConverter = DefaultUserAuthenticationConverter().apply {
             setUserDetailsService(userDetailsService)
         }
-
         val accessTokenConverter = DefaultAccessTokenConverter().apply {
             setUserTokenConverter(userTokenConverter)
         }
-
         return JwtAccessTokenConverter().apply {
             setSigningKey(signingKey)
             setAccessTokenConverter(accessTokenConverter)
@@ -47,6 +45,7 @@ class BeanConfig(private val userDetailsService : UserDetailsService) {
     }
 
     @Bean
+    @Primary
     fun tokenServices(tokenStore : TokenStore) : DefaultTokenServices {
         return DefaultTokenServices().apply {
             setTokenStore(tokenStore)
@@ -62,11 +61,9 @@ class BeanConfig(private val userDetailsService : UserDetailsService) {
             allowedMethods = listOf("*")
             allowCredentials = true
         }
-
         val source = UrlBasedCorsConfigurationSource().apply {
             registerCorsConfiguration("/**", config)
         }
-
         return FilterRegistrationBean<Filter>(CorsFilter(source)).apply {
             order = Ordered.HIGHEST_PRECEDENCE
         }

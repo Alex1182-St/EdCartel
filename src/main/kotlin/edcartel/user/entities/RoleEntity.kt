@@ -15,7 +15,7 @@ data class RoleEntity(
 
     @field:Enumerated(EnumType.STRING)
     @field:Column(unique = true, nullable = false)
-    val name : RoleEnum = RoleEnum.USER,
+    val name : RoleEnum,
 
     @field:Column(nullable = false)
     val description : String = "",

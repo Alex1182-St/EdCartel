@@ -5,23 +5,18 @@ server:
 
 logging:
   level:
-    org:
-      hibernate:
-        SQL: debug
+    org.hibernate.SQL: debug
 
 spring:
   main:
     log-startup-info: false
-    lazy-initialization: true
-    allow-bean-definition-overriding: true
   datasource:
     url: "jdbc:postgresql://${DATABASE_HOST:localhost}:${DATABASE_PORT:5432}/testDB"
     name: "testDB"
     username: "userDB"
     password: "userDB"
     initialization-mode: always
-    hikari:
-      isolate-internal-queries: true
+    driver-class-name: org.postgresql.Driver
   jpa:
     show-sql: false
     generate-ddl: true
@@ -32,7 +27,7 @@ spring:
 
 management:
   endpoints:
+    enabled-by-default: true
     web:
       exposure:
         include: "*"
-

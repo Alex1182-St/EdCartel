@@ -1,7 +1,7 @@
 package edcartel.user.controllers
 
-import edcartel.user.dtos.RoleViewWithUsersDTO
-import edcartel.user.dtos.converters.toViewWithUsersDTO
+import edcartel.user.dtos.converters.toOutput
+import edcartel.user.dtos.output.RoleOutput
 import edcartel.user.repositories.RoleRepository
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.GetMapping
@@ -16,8 +16,7 @@ class RoleController(val roleRepo : RoleRepository) {
 
     @GetMapping("all")
     @PreAuthorize("hasRole('ADMIN')")
-    fun findAll() : Collection<RoleViewWithUsersDTO> =
+    fun findAll() : Collection<RoleOutput> =
         roleRepo.findAll()
-            .map { it.toViewWithUsersDTO() }
-
+            .map { it.toOutput() }
 }

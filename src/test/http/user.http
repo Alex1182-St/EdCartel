@@ -1,52 +1,21 @@
-GET localhost:8888/user/37f559b5-e4f1-44ee-9f61-a9b8db92464a
-Content-Type: application/x-www-form-urlencoded
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1ODU2NTM4OTAsInVzZXJfbmFtZSI6ImFsZXgiLCJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sImp0aSI6IjYxYWRhOTdiLTRhNzktNGNmNy04MmUwLTMwM2JmNGM2NDA2MyIsImNsaWVudF9pZCI6InZ1ZS1jbGllbnQiLCJzY29wZSI6WyJhbnkiXX0.NUel-qXfQAaWTN4HzAk0nlorzgb6UXgoNE4WwkaPAfo
 
-
-####
-GET localhost:9696/user/info
-Content-Type: application/x-www-form-urlencoded
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1ODY1NDcyMTIsInVzZXJfbmFtZSI6ImFsZXgiLCJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sImp0aSI6IjMyYThkYzU2LTY1ZmQtNDVjYi1iNGRlLTc5MmEzNmQxNGQzOCIsImNsaWVudF9pZCI6InZ1ZS1jbGllbnQiLCJzY29wZSI6WyJhbnkiXX0.PO76OH4cqkbqrn3nlfW_C-8QqXigDX6_bJ9D2jcNVSU
-
-
-####
+#####
+# findAll
 GET localhost:9696/user/all
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1ODY4MDAwNTAsInVzZXJfbmFtZSI6ImFsZXgiLCJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sImp0aSI6IjdmYThhNGRlLTRmMGMtNDIyMi04MDVlLWRkYTRmZTY1ZTEyYiIsImNsaWVudF9pZCI6InZ1ZS1jbGllbnQiLCJzY29wZSI6WyJhbnkiXX0.zFibtqc9vii1NLyYcam6znQe-T0F9QTdgsFA6DMFDvQ
+Authorization: Bearer {{access_token}}
 
-####
-GET localhost:9696/user/ef29109b-f0a2-4abd-83c9-c718d1b2aa25
+#####
+# findById
+GET localhost:9696/user/37f559b5-e4f1-44ee-9f61-a9b8db92464a
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1ODY4MDAwNTAsInVzZXJfbmFtZSI6ImFsZXgiLCJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sImp0aSI6IjdmYThhNGRlLTRmMGMtNDIyMi04MDVlLWRkYTRmZTY1ZTEyYiIsImNsaWVudF9pZCI6InZ1ZS1jbGllbnQiLCJzY29wZSI6WyJhbnkiXX0.zFibtqc9vii1NLyYcam6znQe-T0F9QTdgsFA6DMFDvQ
+Authorization: Bearer {{access_token}}
 
-####
-POST localhost:9696/user
+#####
+# userUpdate
+PUT localhost:9696/user/76c6953b-67b2-4d8f-bec5-feca518d2e9a
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1ODY4MDAwNTAsInVzZXJfbmFtZSI6ImFsZXgiLCJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sImp0aSI6IjdmYThhNGRlLTRmMGMtNDIyMi04MDVlLWRkYTRmZTY1ZTEyYiIsImNsaWVudF9pZCI6InZ1ZS1jbGllbnQiLCJzY29wZSI6WyJhbnkiXX0.zFibtqc9vii1NLyYcam6znQe-T0F9QTdgsFA6DMFDvQ
-
-{
-  "username": "тмсдгпgv",
-  "password": "qweqweqwce",
-  "firstName": "qweqwen",
-  "familyName": "qweqgwe"
-}
-
-####
-POST localhost:9696/user/time
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1ODY3MzI3OTUsInVzZXJfbmFtZSI6ImFsZXgiLCJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sImp0aSI6IjkzMzQwYjg0LTUwYWMtNDI5My05NTcxLTkyMjcyYjM4ZjBhNyIsImNsaWVudF9pZCI6InZ1ZS1jbGllbnQiLCJzY29wZSI6WyJhbnkiXX0.ZXwzjjvYKjaGeSPotEnAvEn6g6sveJnfB3S0RdeSj2Q
-
-{
-  "username": "asdmvgfjhgf",
-  "password": "qweqweqwce",
-  "firstName": "qweqwen",
-  "familyName": "qweqgwe"
-}
-
-####
-POST localhost:9696/user
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzY29wZSI6WyJhbnkiXSwiZXhwIjoxNTg2MTIyNDA2LCJqdGkiOiIyYjkwYWI2My00MWU1LTRmMzEtYTgxMy1kN2I4ZTk3NjdkY2EiLCJjbGllbnRfaWQiOiJ2dWUtY2xpZW50In0.K81fxtvmHWJnt5M9pakv4dz3DL1j5VuLfJNfE1T2yuc
+Authorization: Bearer {{access_token}}
 
 {
   "username": "qweqweqwdghjghfgheqwe",
@@ -55,4 +24,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzY29wZSI6WyJhbnkiX
   "familyName": "qweqghjghjghjghghjkhgjkghjkghjkghjkghjkghjkghjkghjkghjkghjkghjkghweqqwewe"
 }
 
-###
+#####
+# userDelete
+DELETE localhost:9696/user/8b2b5fcb-caac-4c39-9e46-8eb3b206c796
+Content-Type: application/json
+Authorization: Bearer {{access_token}}

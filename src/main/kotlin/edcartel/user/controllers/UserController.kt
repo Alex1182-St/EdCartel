@@ -1,15 +1,10 @@
 package edcartel.user.controllers
 
-import edcartel.user.dtos.UserViewDTO
-import edcartel.user.dtos.converters.toViewDTO
-import edcartel.user.entities.RoleEnum
-import edcartel.user.entities.UserEntity
-import edcartel.user.repositories.RoleRepository
+import edcartel.user.dtos.converters.toOutput
+import edcartel.user.dtos.input.UserUpdateInput
+import edcartel.user.dtos.output.UserOutput
 import edcartel.user.repositories.UserRepository
-import edcartel.user.requests.UserCreateInput
-import edcartel.user.requests.UserUpdateInput
 import org.springframework.security.access.prepost.PreAuthorize
-import org.springframework.security.core.Authentication
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.web.bind.annotation.*
 import java.util.*
@@ -19,59 +14,46 @@ import javax.validation.Valid
 @Transactional
 @RestController
 @RequestMapping("user")
-class UserController(val userRepo : UserRepository, val roleRepo : RoleRepository) {
+class UserController(private val userRepo : UserRepository) {
 
-    @GetMapping("all")
-    @PreAuthorize("hasRole('ADMIN')")
-    fun findAll() : Collection<UserViewDTO> =
+    @GetMapping("all/{page}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    fun all() : Collection<UserOutput> =
         userRepo.findAll()
-            .map { it.toViewDTO() }
+            .map { it.toOutput() }
 
     @GetMapping("{id}")
-    @PreAuthorize("hasRole('ADMIN') or authentication.principal.id == #id")
-    fun findById(@PathVariable id : UUID) : UserViewDTO =
+    @PreAuthorize("hasAnyRole('ADMIN') or authentication.principal.id == #id")
+    fun findById(@PathVariable id : UUID) : UserOutput =
         userRepo.findById(id)
-            .map { it.toViewDTO() }
+            .map { it.toOutput() }
             .orElseThrow { UsernameNotFoundException("User not found with id: $id") }
-
-    @PostMapping
-    fun create(@Valid @RequestBody newUser : UserCreateInput, auth : Authentication) : UserViewDTO {
-        val user = UserEntity(
-            username = newUser.username,
-            password = newUser.password,
-            firstName  = newUser.firstName,
-            familyName = newUser.familyName,
-            roles = mutableSetOf(roleRepo.findByName(RoleEnum.USER))
-        )
-
-        return userRepo.save(user).toViewDTO()
-    }
 
     @PutMapping("{id}")
     @PreAuthorize("hasAnyRole('ADMIN') or authentication.principal.id == #id")
-    fun update(@PathVariable id : UUID, @Valid @RequestBody input : UserUpdateInput) : UserViewDTO {
-        val userOld = userRepo.findById(id)
+    fun update(@PathVariable id : UUID, @Valid @RequestBody input : UserUpdateInput) : UserOutput {
+        val user = userRepo.findById(id)
             .orElseThrow { UsernameNotFoundException("User not found with id: $id") }
 
-        val userNew = userOld.copy(
-            username = input.username ?: userOld.username,
-            firstName = input.firstName ?: userOld.firstName,
-            familyName = input.familyName ?: userOld.familyName,
-            aboutSelf = input.aboutSelf ?: userOld.aboutSelf,
-            gender = input.gender ?: userOld.gender,
-            email = input.email ?: userOld.email,
-            phone = input.phone ?: userOld.phone
+        val updatedUser = user.copy(
+            username    = input.username   ?: user.username,
+            name        = input.name       ?: user.name,
+            familyName  = input.familyName ?: user.familyName,
+            aboutSelf   = input.aboutSelf  ?: user.aboutSelf,
+            gender      = input.gender     ?: user.gender,
+            email       = input.email      ?: user.email,
+            phone       = input.phone      ?: user.phone
         )
 
-        return if (userOld != userNew) {
-            userRepo.save(userNew).toViewDTO()
+        return if (user != updatedUser) {
+            userRepo.save(updatedUser).toOutput()
         } else {
-            userOld.toViewDTO()
+            user.toOutput()
         }
     }
 
     @DeleteMapping("{id}")
     @PreAuthorize("hasAnyRole('ADMIN') or authentication.principal.id == #id")
-    fun remove(@PathVariable id : UUID) : Unit = userRepo.deleteById(id)
+    fun delete(@PathVariable id : UUID) : Unit = userRepo.deleteById(id)
 
 }
