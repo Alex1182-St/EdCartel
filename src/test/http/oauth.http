@@ -16,3 +16,18 @@ Content-Type: application/x-www-form-urlencoded
 grant_type=password&username={{username}}&password={{password}}
 
 > ../../src/test/http/scripts/token.js
+
+#####
+# userCreate
+POST localhost:9696/oauth/sign_up
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "username": "qweqwqweqeqwe",
+  "password": "qweqweqwce",
+  "name": "qweqwen",
+  "familyName": "qweqgwe"
+}
+
+> ../../src/test/http/scripts/token.js

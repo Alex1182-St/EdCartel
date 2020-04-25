@@ -1,7 +1,7 @@
 
 #####
 # findAll
-GET localhost:9696/user/all/0
+GET localhost:9696/user/all
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
 
@@ -10,21 +10,6 @@ Authorization: Bearer {{access_token}}
 GET localhost:9696/user/37f559b5-e4f1-44ee-9f61-a9b8db92464a
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
-
-#####
-# userCreate
-POST localhost:9696/user
-Content-Type: application/json
-Authorization: Bearer {{access_token}}
-
-{
-  "username": "qweqwqweqeqwe",
-  "password": "qweqweqwce",
-  "name": "qweqwen",
-  "familyName": "qweqgwe"
-}
-
-grant_type=password&username={{username}}&password={{password}}
 
 #####
 # userUpdate

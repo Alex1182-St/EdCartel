@@ -41,7 +41,7 @@ class OAuthController(
 
 ) {
 
-    @PostMapping("signUp")
+    @PostMapping("sign_up")
     fun signUp(auth : OAuth2Authentication, @Valid @RequestBody newUser : UserCreateInput) : OAuth2AccessToken {
         val role = roleRepo.findByName(RoleEnum.USER)
 
@@ -71,5 +71,4 @@ class OAuthController(
 
         return accessToken
     }
-
 }
