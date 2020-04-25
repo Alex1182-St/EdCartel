@@ -5,23 +5,22 @@ import java.io.Serializable
 import java.util.*
 import javax.persistence.*
 
-
 @Entity
 @Table(name = "users")
 data class UserEntity(
 
     @field:Id
     @field:GeneratedValue(strategy = GenerationType.AUTO)
-    @field:Column(updatable = false, nullable = false)
+    @field:Column(updatable = false, nullable = false, unique = true)
     val id : UUID = UUID.randomUUID(),
 
     @field:Length(min = 2, max = 255)
-    @field:Column(unique = true, nullable = false)
-    val username : String = "",
+    @field:Column(nullable = false, unique = true)
+    val username : String,
 
     @field:Length(min = 2, max = 255)
     @field:Column(nullable = false)
-    val password : String = "",
+    val password : String,
 
     @field:ManyToMany(
         fetch = FetchType.LAZY,
@@ -32,7 +31,7 @@ data class UserEntity(
         joinColumns = [JoinColumn(name = "user_id", referencedColumnName = "id")],
         inverseJoinColumns = [JoinColumn(name = "role_id", referencedColumnName = "id")]
     )
-    val roles : Collection<RoleEntity> = mutableSetOf(),
+    val roles : Collection<RoleEntity> = setOf(),
 
     @field:Column(nullable = false)
     val isEnabled : Boolean = true,
@@ -46,31 +45,32 @@ data class UserEntity(
     @field:Column(nullable = false)
     val isCredentialsNonExpired : Boolean = true,
 
-    @field:Length(min = 2, max = 255)
-    @field:Column(nullable = false)
-    val firstName : String = "",
 
     @field:Length(min = 2, max = 255)
     @field:Column(nullable = false)
-    val familyName : String = "",
+    val name : String,
+
+    @field:Length(min = 2, max = 255)
+    @field:Column(nullable = false)
+    val familyName : String,
 
     @field:Lob
-    @field:Column(nullable = false)
-    val aboutSelf : String = "",
+    @field:Column(nullable = true)
+    val aboutSelf : String? = null,
 
     @field:Column(nullable = true)
     val gender : Boolean? = null,
 
-    @field:Column(unique = true, nullable = true)
+    @field:Column(nullable = true, unique = true)
     val email : String? = null,
 
-    @field:Column(unique = true, nullable = true)
+    @field:Column(nullable = true, unique = true)
     val phone : String? = null,
 
-    @field:Column(unique = true, nullable = true)
+    @field:Column(nullable = true, unique = true)
     val skype : String? = null,
 
-    @field:Column(unique = true, nullable = true)
+    @field:Column(nullable = true, unique = true)
     val git : String? = null
 
 ) : Serializable

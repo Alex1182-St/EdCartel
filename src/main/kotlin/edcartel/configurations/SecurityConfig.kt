@@ -12,7 +12,6 @@ import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.password.PasswordEncoder
 
-
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -31,13 +30,14 @@ class SecurityConfig(
     override fun configure(http : HttpSecurity) {
         http.csrf().disable()
 
+        http.httpBasic().disable()
+        http.formLogin().disable()
+
         http.sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
         http.authorizeRequests()
             .anyRequest().permitAll()
-
-        http.formLogin().and().logout().disable()
     }
 
     override fun configure(auth : AuthenticationManagerBuilder) {

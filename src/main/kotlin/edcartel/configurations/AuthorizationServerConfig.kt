@@ -2,7 +2,6 @@ package edcartel.configurations
 
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager
-import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter
@@ -27,7 +26,8 @@ class AuthorizationServerConfig(
 ) : AuthorizationServerConfigurerAdapter() {
 
     override fun configure(security : AuthorizationServerSecurityConfigurer) {
-        security.allowFormAuthenticationForClients().passwordEncoder(passwordEncoder)
+        security.allowFormAuthenticationForClients()
+            .passwordEncoder(passwordEncoder)
             .tokenKeyAccess("permitAll()")
             .checkTokenAccess("isAuthenticated()")
     }
@@ -38,8 +38,8 @@ class AuthorizationServerConfig(
             .withClient("vue-client").secret(passwordEncoder.encode("vue-password"))
             .authorizedGrantTypes("client_credentials", "password", "refresh_token")
             .scopes("any")
-            .accessTokenValiditySeconds(250 * 60)
-            .refreshTokenValiditySeconds(500 * 60)
+            .accessTokenValiditySeconds(60 * 60 * 2)  // 2h
+            .refreshTokenValiditySeconds(60 * 60 * 8) // 8h
     }
 
     override fun configure(endpoints : AuthorizationServerEndpointsConfigurer) {
