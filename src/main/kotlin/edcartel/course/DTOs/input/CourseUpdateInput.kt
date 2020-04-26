@@ -1,4 +1,4 @@
-package edcartel.course.requests
+package edcartel.course.DTOs.input
 
 import java.util.*
 

@@ -1,10 +1,9 @@
-package edcartel.course.DTOs
+package edcartel.course.DTOs.output
 
-import edcartel.user.dtos.UserViewDTO
 import java.util.*
 
 
-data class CourseViewDTO(
+data class CourseOutput(
 
         val id: UUID?,
 

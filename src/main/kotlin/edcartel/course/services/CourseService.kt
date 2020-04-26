@@ -2,7 +2,7 @@ package edcartel.course.services
 
 import edcartel.course.entities.CourseEntity
 import edcartel.course.repositories.CourseRepository
-import edcartel.course.requests.CourseUpdateInput
+import edcartel.course.DTOs.input.CourseUpdateInput
 import edcartel.user.repositories.UserRepository
 import org.springframework.stereotype.Service
 import java.util.*
