@@ -1,4 +1,4 @@
-FROM gradle:6.2.2-jdk11
+FROM gradle:6.5.0-jdk11
 
 WORKDIR /EdCartel
 
